@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duty Day Legality Tracker</title>
+  <!-- PWA -->
+  <meta name="theme-color" content="#0F141A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DutyDay">
+  <link rel="apple-touch-icon" href="data:image/png;base64,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">
+  <link rel="icon" type="image/png" sizes="512x512" href="data:image/png;base64,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">
+  <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkR1dHkgRGF5IExlZ2FsaXR5IiwgInNob3J0X25hbWUiOiAiRHV0eURheSIsICJkZXNjcmlwdGlvbiI6ICJQYXJ0IDExNyBkdXR5LWRheSBhbmQgcmVzdCBsZWdhbGl0eSB0cmFja2VyIiwgInN0YXJ0X3VybCI6ICIuLyIsICJzY29wZSI6ICIuLyIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMEYxNDFBIiwgInRoZW1lX2NvbG9yIjogIiMwRjE0MUEiLCAiaWNvbnMiOiBbeyJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFNQUFBQURBQ0FZQUFBQlMzR3dIQUFBSUFVbEVRVlI0bk8yZE80NGtSUkNHLzBWSU94N09HandPc0NaekNFenc4TGdBSmxxRFc0QndrTGdBSGc0U0ppNytqTWtCMElMRUFXWWR3TmxpZXJMcmtWV1ZqNGlNNy9PMjFUMWJYZjEvRVpIWmozcjIzb3NQL3hWQVVON3BmUUFBUFVFQUNBMENRR2dRQUVLREFCQWFCSURRSUFDRUJnRWdOQWdBb1VFQUNBMENRR2dRQUVLREFCQWFCSURRSUFDRUJnRWdOQWdBb1VFQUNBMENRR2dRQUVLREFCQWFCSURRSUFDRUJnRWdOTy8yUG9Db2ZQclRWMWUzL2ZMNWQ4MlBJenJQK0dXNHV0dzh2N202N1pNZnYxeTgvNjlmL1BEazN3OXZIb29mRXp5Q0FJV1lDL29jYStHZlNDV1lBekhLZ0FBSHlRMzhKVG5objhpUjRCS0VPQVpyZ0V5T0JMNGw2ZkVoUkI0SXNFS0owTDk0LzZORGovdjkydzhrU1M5ZnZUNzArTXRqUjRabEVHQ0dJOEUvR3ZRdEpoRlM5b2d4UFI5RXVBWUJMdGdUL0ZxQnp5VVZJMGNJUkxpR1JiRHlnMThpOUxmZmZMWjVuKy8vK3ZuVS81SGJIUkFodUFBNXdUOGIrci8vL09QcXRyWGRvTFBoVDhtUkliSUlJUVdvRWZ5NW9LOHhKMEhwOEYrQ0NQT0VFcUIwOFBlR2ZvNmxSVzR0RU9FcFlSYkJXK0hQQ1g2SndQY21aM3YxNXZsTkdBbUdGNERnejdNbFFwUWRvNkZIb0xYd2J3WGZTdWhialVockhXRmtDWVlWWUNuOFhvSy9SazBwbGtRWVZZTGhCRGhhOVQwRWY0blNRa1RxQmtNSkVESDhLYVZraUNMQk1BSWNHWGxHQ241S2JSRkdrV0FJQWZhR2YrVGd6M0ZXaHBFbGNDOEE0Yy9uakFpalN1RDZWeUVJL3o2T2ZyZEFXcGJIK2hlRnRuRGJBZVpPUE1IUHAzUTM4Tm9KWEFwQStNdHhWSVJSSkhBM0FoSCtzaHdkaStiRThUZ091UktBOE5jaHNnUnVSaURDMzRZakk1SG5jY2hGQjloVFZRai9PYzdzRkYzaXBSTzRFR0NPdWVwUCtNdXdWNExXWCtvcGlYa0Jja2Nmd2wrV0VoSjQ2QUttQlNEOGZZa2dnVmtCQ0w4TlJwZkFyQUE1RVA0MmxGb1lXOFNrQUh1MlBLRU5leVR3MUFYTUNjRG9ZNWNSSlRBblFBcmh0OFZaQ2F4aFNvQ2NDa0g0ZldPdEM1Z1NJSVc1M3lZamRRRXpBbEQ5ZlhGbVo4aFNGekFqUUFyVjN6NjVFbGp1QWlZRW9Qckh3MG9YTUNGQVNscjlDYjlkdkhlQjdnSllxUVRRSGd1dmZYY0JVcWorL3ZEY0Jib0tZS0VDUUJsS1hNNjFCNlk2QU5WL2ZLeDFnVzRDOURZZnRybTd2OXQxZjQ5ZHdFd0hZTi9mRG5mM2QvK0hmNjhFT1ZqcUFtWUVTR0g4NmNOYzRHdElZSVV1MXdoai9MSEhVc2h2UDc3ZDlYZGV2bnA5cU1MM3VqQ2ZpUTdBNHJjZmwrTk95dDd3NzhIS0dHUkNBT2pEV3ZEUGhOL1RWeWlIdjB6cVh1N3U3NnBXUGd2MHFQaFdhZDRCMHZuZjB1N1A1YzdIaUF1L1h1UE9FdWtZMUdOdGFHNEVzalQvanlSQnJYRm5DUzlqRUNQUVc1WUNNdDN1ZFR5d1ZQRXRnZ0J2bVFJeGlnaHIzY3ZMYzJoQjA1OUgzNXIvcll3L09hT1A1UkJacWZxNVc1M3B1TlR5L1FBRVdHRkxCR3NTV0FuK0pUa1M5QlNBRVdnRkwyTVI0ODV4RUNBRHl5SllyUHFlTUxjTmFwbXRVTFhjTmwzYTA2KzFyVGtxZElDZDlPNEdqRHRsYWJZSTlyWUF6cVhsUXRucnVHTjVJY3dJZEpJV1l4SGpUajBZZ1FwUWF5eGkzS2tQQWhSa2p3aExGVDI5NzlwOTREd0lVSUdsZ0U5c0NiTDBONkU4ckFFcVVYSStKL3oxb0FOVVptc3N5bmtzMUlNTzBJaTlZU2I4YlVBQUNBMENRR2dRQUVLREFBM0puZXVaLzl1QkFJM1pDamZoYndzQ2RHQXA1SVMvUGJ3UDBBbkNiZ002QUlTbW1RRHA1N3ZUei85YitvVTRLSWZsN3dKSWRBQUlEZ0pBYUJBQVFvTUFFQm9FZ0dwWXVRck1HazBGWUNjSVVucnVBRWwwQUFnT0FrQm96QW5BR0RRR0h1Wi9xWU1BVytzQWlFUHYrVjh5MkFFQVdvSUFVQnd2NDQ5a1JBQzJRK05oNVNxU1hRVG9NZXRCRzQ1Vy8xNlpNTkVCNXFBTFFBdk1DTUJ1VUJ5c2pEOVNSd0VZZzhiRDIvZ2pHZW9BRW92aENGaXEvbEpuQWVnQzQrQ3gra3ZHT29DVTN3VTg3VFdQenRFcndsdWcrOCtpUEx4NXVMcUEzaG9FZnh4NlYzK3A0VlVpMTVnVElLMzh2MzM5eit4akxWYVZTSnlwL2hZRU1ERUNiWjJJcGZDRFh5eUVYekxTQWFUNUx1QjV0b3lBOStvdkdla0EwcmtUd3JxZ1BXZk91Wlh3UzRZRW1HTlBaVWVDZHV3NTE5YTdzeWtCTEZVR3FJTzExOWlVQUhQUUJXd3hVdldYREFvd1Z5R1F3QVpudzIrdCtrc0dCWkNRd0NJamhsOHlLa0FKa0tBY0k1OUxzd0tjN1FMUzJDOWNLL2FlUTAvVlh6SXNnSVFFdlJrOS9KSnhBU1FrNkVXRThFc09CRmdDQ2VwUkl2eGVjQ0ZBcVVxQ0JOdVVPa2NlcXI5azZNTndPWno1d0Z5SzU2cFZnNUxuMFV2NEpTY2RZS0xFZW1DQ2J2QkkxUEJMemdTUWtLQTBrY012T1J1QkxpazVEa254UnFMUzU4cGorQ1hIQWtqekVraUlzRWFOYytNMS9KTERFZWlTcFJOL0pzUWpqMFdFL3hyWEhXQ2lSaWVReHVrR3RjNkQ5L0JMZ3dnZzFaTmd3cHNNdFovM0NPR1hCaEpBV3BaQWlpTkNpK2M1U3ZpbHdRU1Eya2d3WVVXR2xzOXJwUEJMQXdvd1VYc2ttcU9WRUQyZXcyakJueGhXQUtsdE4xamlyQlFXam5QVThFdURDeUN0U3lDTnZlMlp3NWFnSTRkZkNpREFCQ0k4Slhyd0o4SUlJRzFMSUkwdlFzNUlGaVg4VWpBQkppS0tRUERuQ1NuQVJBUVJDUDQ2b1FXWXlMMUFoeGNaY25lZUlnZC9BZ0V1OEh5bG1qM2JyUVQvRVFTWVlZOElFNjJGT1BMK0FzRy9CZ0ZXT0NKQ2lvVlBwQkw4WlJBZ2t4SXl0SVRRNTlIOUtwRmVTQU5sVFFnQ2Z3d0VPRWh2SVFoOEdSQ2dFRXVCUENzR1FhOExBbFNHQU52RzlaZmlBYzZDQUJBYUJJRFFJQUNFQmdFZ05BZ0FvVUVBQ0EwQ1FHZ1FBRUtEQUJBYUJJRFFJQUNFQmdFZ05BZ0FvVUVBQ0EwQ1FHZ1FBRUtEQUJBYUJJRFFJQUNFQmdFZ05BZ0FvVUVBQ0EwQ1FHZ1FBRUx6SDIweTFXMC9VQnNlQUFBQUFFbEZUa1N1UW1DQyIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55In0sIHsic3JjIjogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBZ0FBQUFJQUNBWUFBQUQwZU5UNkFBQVg0a2xFUVZSNG5PM2RQWTRrVjNhQTBTRFJRSmRIcHczK0xJRG1jQkV5SlUrZU5pQlRvREc3MEVDT0FHMUFuaHdCTXVXTzN6UzVBSUlVd0FWME8wTVpSTEtycXl1eklpTGZ6NzN2bmdNSWtEUWFNalhNalB2RmZaSFpuMzN4NXV2Zk5nQ2dsTTludndBQVlEd0JBQUFGQ1FBQUtFZ0FBRUJCQWdBQUNoSUFBRkNRQUFDQWdnUUFBQlFrQUFDZ0lBRUFBQVVKQUFBb1NBQUFRRUVDQUFBS0VnQUFVSkFBQUlDQ0JBQUFGQ1FBQUtBZ0FRQUFCUWtBQUNoSUFBQkFRUUlBQUFvU0FBQlFrQUFBZ0lJRUFBQVVKQUFBb0NBQkFBQUZDUUFBS0VnQUFFQkJBZ0FBQ2hJQUFGQ1FBQUNBZ2dRQUFCUWtBQUNnSUFFQUFBVUpBQUFvU0FBQVFFRUNBQUFLRWdBQVVKQUFBSUNDQkFBQUZDUUFBS0FnQVFBQUJRa0FBQ2hJQUFCQVFRSUFBQW9TQUFCUWtBQUFnSUlFQUFBVUpBQUFvQ0FCQUFBRkNRQUFLRWdBQUVCQkFnQUFDaElBQUZDUUFBQ0FnZ1FBQUJRa0FBQ2dJQUVBQUFVSkFBQW9TQUFBUUVFQ0FBQUtFZ0FBVUpBQUFJQ0NCQUFBRkNRQUFLQ2dWN05mQUREVzMvL1h2MXo5MS83bkgvOXQyT3NBNXZyc2l6ZGYvemI3UlFCOTNScjYxNGdCV0pzQWdJV2RHZnhQQ1FGWWsyY0FZRkV0aG4vTHZ3NFFpdzBBTE9EaDljTkgvL1BmL2VjL04vOTcvTzgvL2NjZi8vMjc5KythLy9XQnNRUUFCUFowc08vUlkvaGZQSTZBUFlRQ3hDVUFJSUF6Zy80NVBZZi94ZEVJZUk0d2dQa0VBQXpVYXRBL1o4VHd2MmdSQWM4UkJqQ08zd0dBVG5vTysxVTk5NStaS0lBK2JBQ2drWmtEZitUZC8wV3ZMY0JMQkFHMFlRTUFKN25EbitQcGYrNkNBTTRSQUhDQW9SL1A0MzhtWWdEMmN3UUFOMlFZK0RQVy94ZXpqZ0gyRWdSd25RMEFQSkZoNkxPUDdRQmNKd0JnTS9RckVBUHdNUUZBYVFaL1RaZC83a0tBeWdRQTVXUWIrbSsrL0diMlM3anF4Nzk4ZGZWZisvYjdud2Ura25Oc0JhaE1BRkJHOU1FZmVkQ2ZjUzBPb29hQnJRRFZDQUNXRm5Ib3J6Ym9qNG9lQnJZQ1ZPRnJnQ3dwMHVBZk1mQy8rOWQvNlA3M2VPcmYvKysvdS83MW93VEJ0Z2tCMW1RRHdGSWlEUDdxZC9pdFBOMFV6QXdDeHdPc1NBQ1EzdXloYitDUEVTRUlIQSt3RWtjQXBEVnI4RWNkK0NPUEFYcXYvOCtZdFNFUUFtUmxBMEE2TXdaLzFLSFBCNDgzQkNOandQRUFXZGtBa01ib3daOXg2SS9ZQWtTOCs3OWw5R1pBQ0pDRkFDQzhrWU0vNDlCL3FtY0VaQnYrVDQyTUFTRkFkQUtBc0F6K1kzNzk1YWMvL3ZzZWYwSmc5dUgvbUJBQUFVQlFJNFovcHFIL2VManYxVElDVmhyK1Q0MklBUkZBUkFLQVVDb1Avak5EL2lVdEltRGw0ZitZRUtBYUFVQUl2UWQvdEtIZlk5amZjaVlFcWd6KzUvU09BU0ZBQkFLQXFhb00vdEVELzVaYk1WQjU2RDlIQ0xBeUFjQTBQWWYvN01FZmFlRGZjdXVQOCtXRG5pRWdBcGpGRHdFeDNJcURQOHZBNTV4TEtQVUlBVDhreEN3Q2dLRjZEZjhaZzkvUXI2ZDNDSWdBUmhJQURMSEs0RGYwMmJaK0lXQWJ3RWdDZ081NkRQK1JnOS9RNTVxZUlTQUM2RTBBMEUzbXdXL29jMFNQRUxBTm9EY0JRQmV0aDcvQlR3YTlRa0FFME1QbnMxOEFhM2w0L1pCdStQLzZ5MDkvL0JlMDBQcnJsVDArVjJBRFFETVpCei8wWWh0QWRINElpQ1phRHYrZWc5L1F2NDhmRGpxdlpRaUlBRm9RQU53bHkxMi93VCtPU0xpdTliY0ZoQUQzRUFDY2x1R3UzK0NQUXhoOFlCdEFCQUtBVTFvTmY0Ty90dXBSMENvRVJBQm5DQUFPaVg3WGIvRG5WeTBLYkFPWVJRQ3dXK1M3Zm9OL1RaVml3RGFBMFFRQXUwUWQvZ1ovTGFzSGdRaGdKQUhBaXd4L0lsbzFCa1FBb3dnQXJqTDR5V0xGR0JBQzlDWUFlRmJFNFcvd3M4ZEtNU0FDNkVrQThBbkRueFdzRWdJaWdGNEVBQjlwTWZ3TmZxSlpJUVphaElBSTRERUJ3QjhpRFgrRG54NnloNEFJb0NVQndMWnRoaisxWkE0QkVVQXJBb0M3aDcvQlQxYVZRMEFFSUFDS00vemhkeGxqUUFSd0R3RlFtT0VQbjhvV0FpS0Fzd1JBVVJHR3Y4RlBWQ0tBQ2dSQVFZWS83Sk1wQkVRQVJ3bUFZZ3gvT0M1TENJZ0FqaEFBaGR3ei9BMStxQkVDSXFBT0FWQ0U0US90WkFnQkVjQkxQcC85QXVqUDhJZTJXdjArZjAvM1JFcXJQdytFMkd3QUZqZHorQnY4VkJCOUcyQVR3RFUyQUFzei9LRy82TnNBbXdDdXNRRllsT0VQNDBYZUJ0Z0U4SlFOd0lJTWY1Z2o4amJBSm9DbmJBQVdZL2hEREZHM0FUWUJYTmdBTE1Ud2h6aWliZ05zQXJnUUFJc3cvQ0VlRVVCa2pnQVdjZlpEZWMvd04vaGh2NGhIQW1jRHhWSEFHbXdBRm1ENFEzd1J0d0ZubzhRV1lBMENJRG5ESC9JUUFVUWlBQktiOFFFMC9PRSszMzcvYzhnUU9FTUU1Q1lBa3ByeDBKL2hEKzFFaWdBUEJkWWtBSW94L0NHT1ZTS0FuQVJBUXFQUC9RMS82R2VGQ0xBRnlFa0FKR1A0dzNwRUFEUDRIWUJFUFBFUDY0dXlpdmNiQWV1ekFWaWM0USs1Uk5rR1JBa1IraEVBU1l4ZXJ4bitNRStVQ0RqRFVVQWVBaUFCNS81UVQ0UUk4RHpBMmdSQWNJWS8xQ1VDNkVrQUxNandoM1ZramdCaUV3Q0JqU3hvd3gvaWloQUJaOWdDeENZQWdocTUramY4SWI3WkVlQW9ZRDBDWUNIM2ZPVVBpQzlyQkJDVEFBam9UREU3OTRjYU1rYUFMVUJNQWlBWTUvN0FTMlpId0JraUlCNEJzQURuL2xEUHpBaHdGTEFHQVJESXlOVS93RDBjQmVRbkFJSnc3ZzhjTmZzb1FBVGtKZ0NLTWZ4aExiTWpnTHdFUUFDajd2NE5mMWhUdHVjQmJBRmlFQUNUT2ZjSFdoQUJIQ1VBaW5EM0QrdHpITUFSQW1BaXEzOWdGYllBK1FpQXhSbitVSXN0QUhzSmdFbWMvUU85eklvQVc0QmNCRUFTVnYvQUVaa2lnRGtFd0FRaml0ZndCN0t3QlpoREFBeG05UStNa21rTElBTEdFd0FMY3ZjUFhIZ29rR3NFd0VEdS9vRVpaa1NBTFVCOEFpQXdELzRCbVhrZ01EWUJNSWdILzRDWnNod0YyQUtNSXdDQ3N2b0hXc3R5Rk1BWUFtQUFkLzhBKzlrQ2pDRUFBbkwzRC9SaUM4Q0ZBT2pNM1Q4UVRZYm5BV3dCK2hNQXdSeTkremY4Z1F4c0FlSVJBQjBwV0NBcVd3QUVRQ0R1L29HUlJrZUFMVUFzQWdBQUNoSUFuUnhkWGJuN0IyYUl2Z1Z3RE5DUEFBQ0FnZ1JBQis3K2dVeHNBV29TQUFCUWtBQm96TjAva0pFdFFEMENBQUFLRWdBVHVmc0hJb20rQmFBdEFkQ1FGUldRWGVSZkNIU05iVXNBSk9IdUg0Q1dCRUFqdlIvK0F4aGw1QmJBdzREekNBQ0E0TjcrOEhiMlMyQkJBbUFDRC84QmU3ejk0ZTBmdzMvbENQQXc0QndDb0FFckthQzEyUVBmdzREckV3REJ1ZnVIV2g3ZjlULzNyMEVybjMzeDV1dmZacitJelB6eUg5RENrZUgrM1orKzYvWTZuaHE1bmorNmRYajMvbDJuVjFMRHE5a3ZBS0F5ZC9YTTRnaGdJSGYvd0dObmgvL0lhSWo4bFVEdVl3TndCdytpQUdmY004QkhyditqZTNqOTRCamdEallBUWJuN2gvWGNlc0J2ajFuRFAvSTNBamhQQUF6aWwvK2d0bnNIZjVVN2Y4Y0E0emdDT01uNkg5Z2o0eDEvSm80QnpoTUFBVm4vUTM2ckRmNXZ2Ly9aM2ZsaUhBRU1ZUDBQZFdROTU0OUVhSXdoQUFBYVdmMmMzOE9BYTNFRWNFTFA4My9yZjhqSEhmOWNuZ000eHdhZ00rdC9XSmQxZnorT0Fmb1RBQUFuckw3dXY4WXh3RG9jQVJ4ay9RKzF1ZU9QeVRIQWNRS0FKYjM5NGEyTExVMFovS3pHSHdkODBKRU5nRC84WjQ2bkYyb1hYKzV4N3grOHMrcjdiOVFaL1pFakJ4dUFZendERUlUaDM0OC9icFd6cXA3elU0TWpnQVA4L0c5ODF5N1lsLys5Q3pKN1dQZm41RG1BWTJ3QVdNYWVpL2E5WDl0aWJiN1d0NTl2QStRbkFEcngvZit4amw2MGhRQlBXZmZINVBjQStuRUVFSUR6LzNsOFd3QjMvRlFsQUhaeS9oL1h2WGZ5bmcrb3llQmZrK2NBOXZNMXdKMk9Cc0NSSXdBYmdEWmFyZlJkM05mbWEzMXRqVmpSSDMzZVFBRHM0eG1BRHB6L3o5SHF3dXo1Z0hVNTU4L0pjd0I5T0FLWXpOMS9XNWNMZElzQjd2bUFkVmozdzZjY0FlelU2eGNBQlVCZmpnVnFzKzRmSTlveGdDT0FmV3dBZHZBQVlGNnROZ0llRk16SFhYOWRIZ1RjeHpNQWpUbi9qNm5sOHdIRWRzOHpITTc1NC9JY1FIczJBQk5aLzQ5bEc3QTJkL3h3akFDZ0hDR3dGdWY4Y0k2SEFIZndBT0RhUENpWWw3ditPRHdJbUk5bkFDalA4d0g1T09lSCt6a0NlSUZ2QU5UZ1dDQUg2MzcyOGsyQWx6a0NlSUgxZjAyT0JlS3g3bzl0MUZQNmpnSGFzUUdBWjN6M3ArK2EvWnJnNWEvSE9RWS85R0VEOEFJYkFHd0Q1akQ0OC9FZ1lDNDJBUEFDendlTTVad2Z4aEFBc0pNUTZNOWRQNHpqYTRBMytBWUF6L0cxd2ZaOHJZOGVYTU52OHd6QURiM08vN2ZOTXdDcjhIekFmYXo3MStLYkFMazRBcGpBOEYrSFk0SHpyUHRoTGh1QUczd0RnS05zQkY1bThLL05Od0h5OEF3QU5PVDVnT3VjODBNc2pnQ2dNY2NDSDNQT0R6RUpBT2hFQ0ZqM1EyUUNBRHFyK0xQQ0JqL0U1eGtBR0tEbEdYYms1d1B1T2VmZk5zTWZScklCZ0lGV1BoWXcrQ0VYQVhDRlg1Q2lwNWtoY092dmVXWVFHL3hFOXZENndWY0JyL0E3QUZmNERRQkdHZkhiQVdmK0hpOE5aNE9mNS9nMXdEd0V3QlVDZ05GNmhVRHJRZTFyZmJ6RWp3SGw0QWdBZ21oOUxOREMweU1HZC8yd0RnRUF3YlFLZ1pZTWZsaVByd0ZDVUNzTXpoWCtmNEJWMlFCQVlCRzNBWHNZL0JDZkFJQUVzb1NBd1E5NU9BS0FSS0lPV0g5YUgrUWpBQ0NaYU1NMjBtc0I5bk1FQUVuTlBoWXcrQ0UzR3dCSXppQUd6aEFBQUZDUUFBQ0FnZ1FBQUJRa0FBQ2dJQUVBQUFVSkFBQW9TQURBQWtaL0ZkQlhEeUUvQVFBQUJRa0FBQ2hJQU1BaVJxM2xyZjloRFFJQUZ0SjdPQnYrc0E0QkFBQUZDUUJZVEsrN2RIZi9zQllCQUF0cVBhd05mMWpQcTlrdkFPampNclRmL3ZEMjdyOEc3UFhqWDc2YS9STFl5UWFnZ1Y5LytXbjMvKzJiTDcvcCtFcmdVMmVIdU9GUFZOOSsvL1BzbDdBRUc0QXIzcjEvdHoyOGZwajlNcUNKeDhQODFrYkEwR2MxNzk2L20vMFN3aElBVUl3aEQyeWJJd0FBS0VrQUFFQkJBZ0FBQ2hJQUFGQ1FBQUNBZ2dRQUFFMzRFYUJjQk1BRWZnd0lnTmtFUUNOSGZnMFFnSFA4Q21BN0F1QUd2eUFGa0pkcitHMENBQUFLRWdBQVVKQUFBT0J1dmdHUWp3QUFnSUlFUUVOSHZnbmdxNEFBeC9nR1FGc0M0QVdlSWdYSXg3WDdaUUlBQUFvU0FBRGN4UU9BT1FrQUFDaElBRXprUVVBQVpoRUFqZmt6QVFEYTh3MkE5Z1RBRHA0bUJjakROWHNmQVFEQWFSNEF6RXNBVE9ZNUFBQm1FQUFkZUE0QW9CM24vMzBJQUFCT3NmN1BUUURzNUtFU2dQaGNxL2NUQUFGNERnQ0EwUVJBSjU0REFMaWY4LzkrQkFBQWh6bi96MDhBSE9Cc0NTQXUxK2hqQkVBUW5nTUFZQ1FCMEpIbkFJQVZqVnIvTy8vdlN3QUFRRUVDNEtDZVoweU9BUURPY2Y1L25BQUFZRGRQLzY5REFIVG1PUUNBNDV6Lzl5Y0FUbkFNQUJDSDlmODVBZ0NBWGF6LzF5SUFCbkFNQUxDZjlmOFlBaUFneHdCQU5PNysxeU1BVG5MbUJEQ2ZhL0Y1QW1BUXh3QUFMN1ArSDBjQUJPVVlBSWpDK245TkF1QU9WazhBODdnRzMwY0FESFQwR01BV0FKaHQ1TjIvOWY5WUFnQUFDaElBZHpxNmd2SXdJSkJGNUx0LzYvLzdDWURnSEFNQTBJTUFhRUNKQXF1Si9PUy9hMjRiQW1BQ0R3TUNmT0RodnprRUFBQVVKQUFhOFRBZ3NBb1AvOVVnQUpKd0RBQkFTd0tnSVdVS1pPZmh2em9Fd0VRZUJnUWlHVDM4UGZ3M2x3QUFnSUlFUUdPOUh3YTBCUUI2aUg3M2IvM2ZuZ0FBZ0lJRVFBZTJBRUFtN3Y1ckVnREYvUGlYcjBJLzVRdkFHQUtnazRoYmdNZURYd1FBMitidXY3SlhzMThBL1JuMkFEejEyUmR2dnY1dDlvdFkxY1ByaDhQL25xTjM5cmMyQjNzR3YrL2hRbDNSNy82M3pRYWdKMGNBSGMxODQrNzlZTnNPUUUwWlB2dUdmMStPQUlMNTlaZWZEbTBCM256NXpVZGJnQXdmYXFBZTI4WjRiQUE2RzFHd2I3Nzg1cTZuKzBVRDFKTGhNKy91dnovUEFBelE4MW1Bdi83NWI0Zi8ydGNvZEZqZmpPSHY3RDhtRzRBQmVyMlJXdzUvZ0NnTS96RnNBQVpwdVFYb09maHRBV0JkN3Y1NXpBWmdrQlp2NkwvKytXL2Q3L296bkEwQ3gyWDViQnYrNC9nV1FHQ1hid1JZOVFNWjJTakdaZ013MEpteVBmb1R3UzFrdVZNQTlySDY1emtDZ0dlSkFGaUR6ekxYQ0lEQnpoVHVyRFdhQ3dma051c3o3TzQvQndFd2dUYzZ3QWV1aVhNSWdDUnNBWUFqTXQzOU00Y0FtTVJSQU5CTHB1SHY3bjhlQWNBdUlnQnk4RmxsTHdFd1VhWXRBTUF0N3Y3ekVRRHM1czRDWXZNWjVRZ0JNRm0yTFlBTERNUTA4N1BwN2o4bkFSQ0FDQUR1WWZoemhnRGdGQkVBTWZnc2NwWUFDQ0xiRm1EYlhIaGd0dG1mUVhmL3VRbUFRREpHQUZDVDRaK2ZBRmlBNXdHZ25tem4vc1FqQUlMSldNZ2lBTWJLK0puTGVHMWJuUUFJS09OUlFNWUxFbVEwKzdObTliOE9BYkFRRVFCcm0vMFptMzJOb1MwQkVOVFpZcDc5QVoxOWdZSlZ6ZjVzbmIyMnVQdVBTd0FFbHZXRE0vdENCYXZKK3BuS2VnMnJRZ0FzYVBZV1lOdnlYckFnbWdpZnBRalhGTm9UQU1GbFBRcll0aGdYTHNnc3dtZkk2bjlkQWlBQkVRRDFSUGpzR1A1ckV3QkpaUDVBUmJpUVFTYVpQek9acjFYVkNJREZSZGdDYkZ2dUN4cU1GT1d6RXVYYVFUK2ZmZkhtNjk5bXZ3ajJlM2o5Y09yZkYrV2lzbTB1TFBDY0ZUNmo3djV6c1FGSUp2UHpBQmVSTG5RUVFhVFBoT0ZmaHdCSVNBVEFPaUo5Rmd6L1dnUkFNU0lBNG9qMEdZaDBiV0FNQVpEVVBjVWQ2WU1lNlFJSUkwVjY3OTl6VFhEM245ZXIyUytBODk2OWYzZjZvY0JJTGhmQ1NHRUN2VVFhL1BjeS9IT3pBVWh1aGVjQkxsYTZNTUp6SXI3SG5mdlhKUUFXSUFJZ3ZvanZiY08vTnI4RHNJaDdqZ0lpWHBpMkxXYWd3RkVyZnI0RXdCcHNBQmF4eWtPQmowVzljTUplVWQvRGhqL2JKZ0NXSWdJZ2pxanZYY09mQzBjQUMxcnhPR0RiNGtZS1BMYnFaOGp3WDQ4TndJSlczQVJzVyt3TEsyeGI3UGVvNGM5VE5nQUxXM1VUc0cyeFE0VjZWdjY4R1A3cnNnRlkyS3FiZ0cyTGY4R2xqdWp2UmNPZmEyd0FDbGg1RTdCdDhXT0ZOYTMrMlREODEyY0RVTURLbTRCdHkzRWhaaTBaM25PR1B5K3hBU2hrOVUzQXR1VUlGdktxOERrdy9Pc1FBTVhjKzRjSFZiZ0F3bE5WM3ZlR2Z5MENvS0FxRWJCdFFvRDdWSHF2Ry83MUNJQ2lLa1hBdGdrQmpxbjIvamI4YS9JUVlGSDNmdUN6RGRSc0YzVG15ZlplTWZ3NXl3YWd1R3FiZ0czTEZ5K01VZkc5YlBqWEpnQW9HUUVYWXFDMnl1OWR3eDhCd0xadDkwZkF0dFcrbUpKTDlmZXE0YysyQ1FBZXFSNEIyeVlFVnVmOWFmanpnUURnSXlMZ2QwSmdMZDZUdnpQOGVVd0E4SWtXRWJCdGExeDB0MDBNWk9YOTl6SERuNmNFQU04U0FaOFNBamw0ejMzSzhPYzVBb0NyUk1CMVlpQVc3N0hyREgrdUVRQzhTQWpjSmdibThINjZ6ZURuSlFLQVhVVEFQbUtnTCsrZmZReC85aEFBN0NZQ2poTUU5L0ZlT2M3d1p5OEJ3Q0d0SW1EYmFsM2N0MDBNN09WOWNaN2h6eEVDZ0ZOc0E5cW9IZ1grK2J2clp4NEJ3R20yQVgyc0dnWCtHWC9ncnA4SUJBQjNhUmtCMjJaSTNKSWxEUHd6dks3MVAwUERuM3NJQUpxd0RZaWhkeVQ0WjNPZXUzNmlFUUEwWXhzQW4zTFhUMVFDZ0taYVI4QzJDUUZ5NnJHTk1meHA2ZlBaTDRDMXZIdi9ydmxGS3N2Wk4xejB1T3MzL0duTkJvQnViQU9veGwwL21RZ0F1aE1Dck03Z0p5TUJ3QkE5SW1EYmhBQno5VHFlTXZ3WlFRQXdsQkJnQlFZL0t4QUFETmNyQXJaTkNOQlh6d2RTRFg5R0V3Qk1Jd1RJd3VCblJRS0FxWHBHd0xZSkFlN1QreXVvaGo4ekNRQkNFQUpFWXZCVGdRQWdsTjRoc0cxaWdPZU4rTUVwZzU5SUJBQWhDUUZHTWZpcFNnQVExb2dJdUJBRHRZejhlV25EbjZnRUFPRUpBVm94K09FREFVQWFJME5nMjhUQUtrYi9ZVklHUDFrSUFOSVpIUUxiSmdheW1mRW5TQnI4WkNNQVNHdEdDR3liR0locTFoOGJiZkNUbFFBZ3ZWa2hjQ0VJNXBnMThDOE1mcklUQUN4bGRneHNteURvWmZiQTN6WkRuN1VJQUpZVUlRUXVCTUU1RVFiK2hjSFBpZ1FBUzRzVUFoZUM0SG1SQnY2RndjL0tCQUJsUkl5Qng2cUVRY1JCLzVpaFR4VUNnSEtpaDhCVFdjTWcrcUIveXVDbkdnRkFhZGxpNEpaUm9aQnRzTjlpNkZPWkFJQnRyUkRnWlFZL2JOdXIyUzhBSW5nOEVNVEFtZ3g5K0pnQWdDZkV3RG9NZmJoT0FNQU5Ud2VJSUlqTndJZjlCQUFjWURzUWo2RVA1d2dBT01sMllBNERIOW9RQU5DSUlPakR3SWMrQkFCMDh0emdFZ1czR2ZZd2pnQ0FnYTROdUdwaFlORERmQUlBQWxnMURBeDZpRXNBUUdCN0Iram9VRERZSVQ4QkFBc3drSUdqUHAvOUFnQ0E4UVFBQUJRa0FBQ2dJQUVBQUFVSkFBQW9TQUFBUUVFQ0FBQUtFZ0FBVUpBQUFJQ0NCQUFBRkNRQUFLQWdBUUFBQlFrQUFDaElBQUJBUVFJQUFBb1NBQUJRa0FBQWdJSUVBQUFVSkFBQW9DQUJBQUFGQ1FBQUtFZ0FBRUJCQWdBQUNoSUFBRkNRQUFDQWdnUUFBQlFrQUFDZ0lBRUFBQVVKQUFBb1NBQUFRRUVDQUFBS0VnQUFVSkFBQUlDQ0JBQUFGQ1FBQUtBZ0FRQUFCUWtBQUNoSUFBQkFRUUlBQUFvU0FBQlFrQUFBZ0lJRUFBQVVKQUFBb0NBQkFBQUZDUUFBS0VnQUFFQkJBZ0FBQ2hJQUFGQ1FBQUNBZ2dRQUFCUWtBQUNnSUFFQUFBVUpBQUFvU0FBQVFFRUNBQUFLRWdBQVVKQUFBSUNDQkFBQUZDUUFBS0FnQVFBQUJRa0FBQ2hJQUFCQVFRSUFBQW9TQUFCUWtBQUFnSUlFQUFBVUpBQUFvQ0FCQUFBRkNRQUFLT2ovQWNVOVZ2cXFrbXVhQUFBQUFFbEZUa1N1UW1DQyIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn1dfQ==">
+  <!-- /PWA -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #12161C;
+      --panel: #1A2029;
+      --line: #2B333D;
+      --amber: #F0A93B;
+      --green: #5BC08A;
+      --red: #E06B6B;
+      --ink: #E7ECF2;
+      --dim: #8B98A7;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      padding: 16px;
+    }
+
+    /* Let grid/flex children shrink so nothing forces horizontal overflow */
+    .input-wrapper, .stat { min-width: 0; }
+    input, select, button { max-width: 100%; }
+    input[type="text"], input[type="number"], select { width: 100%; }
+
+    .mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .current-time {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .current-time label {
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .current-time input {
+      font-family: 'IBM Plex Mono', monospace;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      padding: 6px 8px;
+      font-size: 12px;
+      width: 85px;
+      outline: none;
+    }
+
+    .current-time input:focus {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .current-time input[readonly] {
+      cursor: default;
+      opacity: 0.9;
+    }
+
+    .tz-ref {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--dim);
+      white-space: nowrap;
+    }
+
+    /* Hide time picker spin buttons */
+    .current-time input::-webkit-outer-spin-button,
+    .current-time input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Hide time picker clear button */
+    .current-time input::-webkit-clear-button {
+      display: none;
+    }
+
+    /* Hide time picker calendar button */
+    .current-time input::-webkit-calendar-picker-indicator {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .settings-btn {
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .header h1 {
+        font-size: 18px;
+        width: 100%;
+      }
+
+      .current-time {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .current-time label {
+        font-size: 11px;
+      }
+
+      .current-time input {
+        width: 100px;
+        font-size: 13px;
+      }
+
+      .settings-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .header h1 {
+        font-size: 18px;
+      }
+
+      .current-time {
+        justify-content: space-between;
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .flight-inputs {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .settings-btn {
+      background: none;
+      border: 1px solid var(--line);
+      color: var(--dim);
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+
+    .settings-btn:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      color: var(--dim);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .input-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .input-group.full {
+      grid-template-columns: 1fr;
+    }
+
+    .input-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-label {
+      font-size: 11px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    input[type="time"],
+    input[type="number"],
+    input[type="text"] {
+      font-family: 'IBM Plex Mono', monospace;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 0 2px rgba(240, 169, 59, 0.1);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 12px;
+      background: rgba(43, 51, 61, 0.5);
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--dim);
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 16px;
+      font-weight: 500;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .stat-value.green {
+      color: var(--green);
+    }
+
+    .stat-value.red {
+      color: var(--red);
+    }
+
+    .stat-value.breakdown {
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .stat-value.breakdown .tz-tag {
+      color: var(--dim);
+      font-size: 11px;
+    }
+
+    .status-banner {
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 12px;
+      font-weight: 500;
+      font-size: 12px;
+    }
+
+    .status-banner.legal {
+      background: rgba(91, 192, 138, 0.15);
+      color: var(--green);
+      border: 1px solid var(--green);
+    }
+
+    .status-banner.illegal {
+      background: rgba(224, 107, 107, 0.15);
+      color: var(--red);
+      border: 1px solid var(--red);
+    }
+
+    .wheels-up-section {
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 12px;
+    }
+
+    .wheels-up-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .wheels-up-box {
+      padding: 8px;
+      background: rgba(43, 51, 61, 0.5);
+      border-radius: 6px;
+    }
+
+    .wheels-up-box.legal {
+      background: rgba(91, 192, 138, 0.15);
+      border: 1px solid var(--green);
+    }
+
+    .wheels-up-box.illegal {
+      background: rgba(224, 107, 107, 0.15);
+      border: 1px solid var(--red);
+    }
+
+    .wheels-up-box.caution {
+      background: rgba(240, 169, 59, 0.15);
+      border: 1px solid var(--amber);
+    }
+
+    .wheels-up-time {
+      font-size: 16px;
+      font-weight: 500;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-top: 4px;
+    }
+
+    .wheels-up-time.green {
+      color: var(--green);
+    }
+
+    .wheels-up-time.red {
+      color: var(--red);
+    }
+
+    .wheels-up-time.caution {
+      color: var(--amber);
+    }
+
+    .wheels-up-time.breakdown {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .wheels-up-time.green {
+      color: var(--green);
+    }
+
+    .wheels-up-time.red {
+      color: var(--red);
+    }
+
+    .upcoming-flight-card {
+      margin-bottom: 24px;
+    }
+
+    .flight-inputs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .block-time-card {
+      margin-bottom: 24px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 400px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--dim);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-btn:hover {
+      color: var(--ink);
+    }
+
+    .modal-section {
+      margin-bottom: 20px;
+    }
+
+    .modal-section-title {
+      font-size: 12px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .modal-input-group {
+      margin-bottom: 12px;
+    }
+
+    .modal-input-label {
+      font-size: 12px;
+      color: var(--ink);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .modal-input {
+      font-family: 'IBM Plex Mono', monospace;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      padding: 8px 12px;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    .modal-input:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 0 2px rgba(240, 169, 59, 0.1);
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--ink);
+      cursor: pointer;
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      border-color: var(--amber);
+      background: rgba(240, 169, 59, 0.1);
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: var(--bg);
+      border-color: var(--amber);
+    }
+
+    .btn-primary:hover {
+      background: #E09A2B;
+      border-color: #E09A2B;
+    }
+
+    .rest-info {
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Duty Day Legality</h1>
+      <div class="current-time">
+        <label>Current time (dep local / Z)</label>
+        <input type="text" id="currentTime" readonly aria-readonly="true">
+        <span id="currentTimeZ" class="tz-ref">Z: —</span>
+      </div>
+      <button class="settings-btn" id="settingsBtn" title="Settings">
+        <i class="fas fa-cog"></i>
+      </button>
+    </div>
+
+    <!-- Timezone Setup -->
+    <div class="card" style="margin-bottom: 24px; background: rgba(91, 192, 138, 0.08); border-color: rgba(91, 192, 138, 0.3);">
+      <div class="card-title">Timezones</div>
+      
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 12px;">
+        <div class="input-wrapper">
+          <label class="input-label">Departure timezone</label>
+          <select id="depTZ" style="font-family: 'IBM Plex Mono', monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; color: var(--ink); padding: 8px 12px; font-size: 14px;">
+            <option value="HST">Hawaii (HST −10)</option>
+            <option value="AKST">Alaska (AKST −9)</option>
+            <option value="PST" selected>Pacific (PST −8)</option>
+            <option value="MST">Mountain (MST −7)</option>
+            <option value="CST">Central (CST −6)</option>
+            <option value="EST">Eastern (EST −5)</option>
+            <option value="COT">Colombia (COT −5)</option>
+            <option value="AST">Atlantic / San Juan (AST −4)</option>
+          </select>
+        </div>
+        <div class="input-wrapper">
+          <label class="input-label">Arrival timezone</label>
+          <select id="arrTZ" style="font-family: 'IBM Plex Mono', monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; color: var(--ink); padding: 8px 12px; font-size: 14px;">
+            <option value="HST">Hawaii (HST −10)</option>
+            <option value="AKST">Alaska (AKST −9)</option>
+            <option value="PST">Pacific (PST −8)</option>
+            <option value="MST">Mountain (MST −7)</option>
+            <option value="CST">Central (CST −6)</option>
+            <option value="EST" selected>Eastern (EST −5)</option>
+            <option value="COT">Colombia (COT −5)</option>
+            <option value="AST">Atlantic / San Juan (AST −4)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upcoming Flight -->
+    <div class="card upcoming-flight-card">
+      <div class="card-title">Upcoming flight details</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="input-wrapper">
+          <label class="input-label">Flight time (h:mm)</label>
+          <input type="text" id="flightTime" value="3:20" placeholder="H:MM" maxlength="5" inputmode="numeric" title="Duration, wheels up to wheels down">
+        </div>
+        <div class="input-wrapper">
+          <label class="input-label">Taxi in (h:mm)</label>
+          <input type="text" id="taxiIn" value="0:10" placeholder="H:MM" maxlength="5" inputmode="numeric" title="Duration, wheels down to parking">
+        </div>
+      </div>
+    </div>
+
+    <!-- Pilot Cards -->
+    <div class="grid-2">
+      <!-- Captain -->
+      <div class="card">
+        <div class="card-title">Captain</div>
+
+        <div class="input-group">
+          <div class="input-wrapper">
+            <label class="input-label" id="capDutyOnLabel">Duty on — show time</label>
+            <input type="text" id="capDutyOn" value="17:00" placeholder="HH:MM" maxlength="5" inputmode="numeric">
+          </div>
+          <div class="input-wrapper">
+            <label class="input-label">Segments</label>
+            <input type="number" id="capSegments" min="1" max="9" value="3">
+          </div>
+        </div>
+
+        <div class="input-group full">
+          <div style="display: flex; gap: 16px; align-items: center;">
+            <label class="input-label" style="margin-bottom: 0;">Status</label>
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; margin: 0; cursor: pointer;">
+              <input type="radio" name="capStatus" value="line" checked style="margin: 0; cursor: pointer;">
+              Line
+            </label>
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; margin: 0; cursor: pointer;">
+              <input type="radio" name="capStatus" value="reserve" style="margin: 0; cursor: pointer;">
+              Reserve (short-call)
+            </label>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+          <div>
+            <div class="stat" style="margin-bottom: 12px;">
+              <div class="stat-label">FDP limit</div>
+              <div class="stat-value mono" id="capFdpLimit">10:00</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Remaining</div>
+              <div class="stat-value mono" id="capRemaining">10:00</div>
+            </div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Ends</div>
+            <div class="stat-value mono breakdown" id="capFdpEnd">—</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Max +2h ext</div>
+            <div class="stat-value mono breakdown" id="capExtension" style="color: var(--amber);">—</div>
+          </div>
+        </div>
+
+        <div class="wheels-up-section">
+          Upcoming flight legal window
+          <div class="wheels-up-grid">
+            <div class="wheels-up-box">
+              <div class="stat-label">Latest wheels-up — Ends / Max</div>
+              <div class="wheels-up-time mono breakdown" id="capWheelsUp">—</div>
+            </div>
+            <div class="wheels-up-box legal" id="capWheelsStatus">
+              <div class="stat-label">Executable</div>
+              <div class="wheels-up-time green" id="capWheelsStatusText">✓ YES</div>
+            </div>
+          </div>
+          <div class="rest-info" id="capRemainAfter">Remaining FDP after landing: 10:00</div>
+        </div>
+      </div>
+
+      <!-- First Officer -->
+      <div class="card">
+        <div class="card-title">First Officer</div>
+
+        <div class="input-group">
+          <div class="input-wrapper">
+            <label class="input-label" id="foDutyOnLabel">Duty on — show time</label>
+            <input type="text" id="foDutyOn" value="17:00" placeholder="HH:MM" maxlength="5" inputmode="numeric">
+          </div>
+          <div class="input-wrapper">
+            <label class="input-label">Segments</label>
+            <input type="number" id="foSegments" min="1" max="9" value="3">
+          </div>
+        </div>
+
+        <div class="input-group full">
+          <div style="display: flex; gap: 16px; align-items: center;">
+            <label class="input-label" style="margin-bottom: 0;">Status</label>
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; margin: 0; cursor: pointer;">
+              <input type="radio" name="foStatus" value="line" checked style="margin: 0; cursor: pointer;">
+              Line
+            </label>
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; margin: 0; cursor: pointer;">
+              <input type="radio" name="foStatus" value="reserve" style="margin: 0; cursor: pointer;">
+              Reserve (short-call)
+            </label>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+          <div>
+            <div class="stat" style="margin-bottom: 12px;">
+              <div class="stat-label">FDP limit</div>
+              <div class="stat-value mono" id="foFdpLimit">10:00</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Remaining</div>
+              <div class="stat-value mono" id="foRemaining">10:00</div>
+            </div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Ends</div>
+            <div class="stat-value mono breakdown" id="foFdpEnd">—</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Max +2h ext</div>
+            <div class="stat-value mono breakdown" id="foExtension" style="color: var(--amber);">—</div>
+          </div>
+        </div>
+
+        <div class="wheels-up-section">
+          Upcoming flight legal window
+          <div class="wheels-up-grid">
+            <div class="wheels-up-box">
+              <div class="stat-label">Latest wheels-up — Ends / Max</div>
+              <div class="wheels-up-time mono breakdown" id="foWheelsUp">—</div>
+            </div>
+            <div class="wheels-up-box legal" id="foWheelsStatus">
+              <div class="stat-label">Executable</div>
+              <div class="wheels-up-time green" id="foWheelsStatusText">✓ YES</div>
+            </div>
+          </div>
+          <div class="rest-info" id="foRemainAfter">Remaining FDP after landing: 10:00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Block-in & Rest Check -->
+    <div class="card block-time-card">
+      <div class="card-title">End of duty & rest check</div>
+
+      <div class="input-wrapper" style="margin-bottom: 12px;">
+        <label class="input-label">Block-in time (actual arrival)</label>
+        <input type="text" id="blockInTime" value="" placeholder="HH:MM" maxlength="5" inputmode="numeric">
+      </div>
+
+      <div class="stat-grid" id="restCheckPanel" style="display: none;">
+        <div class="stat">
+          <div class="stat-label">Duty off (block-in + post-flight)</div>
+          <div class="stat-value mono" id="offDutyTime">—</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Min rest required</div>
+          <div class="stat-value mono" id="minRest">10:00</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Earliest next duty</div>
+          <div class="stat-value mono" id="nextDutyTime">—</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">&nbsp;</div>
+          <div class="stat-value" style="visibility: hidden;">—</div>
+        </div>
+      </div>
+
+      <!-- At Hotel — earliest legal show -->
+      <div style="border-top: 1px solid var(--line); margin-top: 16px; padding-top: 14px;">
+        <div class="stat-label" style="margin-bottom: 8px;">At hotel — earliest legal show</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="input-wrapper">
+            <label class="input-label">At hotel (24hr)</label>
+            <input type="text" id="atHotelTime" value="" placeholder="HH:MM" maxlength="5" inputmode="numeric">
+          </div>
+          <div class="input-wrapper">
+            <label class="input-label">Transport (min)</label>
+            <input type="number" id="hotelTransport" min="0" max="240" value="0">
+          </div>
+        </div>
+        <button class="btn" id="snapHotelBtn" style="width: 100%; margin-top: 8px;">Snap current time</button>
+        <div class="stat" style="margin-top: 12px;">
+          <div class="stat-label">Earliest legal show — local / Z</div>
+          <div class="stat-value mono" id="hotelShowTime">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Settings</h2>
+        <button class="close-btn" id="closeSettingsBtn">×</button>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Airline Configuration</div>
+
+        <div class="modal-input-group">
+          <label class="modal-input-label">Minimum rest period (minutes)</label>
+          <input type="number" id="minRestInput" class="modal-input" min="0" max="1440" value="660">
+          <div class="rest-info">Default: 660 (11 hours — Frontier contract; Part 117 floor is 600 / 10 hours). Adjust per your airline's contract.</div>
+        </div>
+
+        <div class="modal-input-group">
+          <label class="modal-input-label">Block-in to duty-off (minutes)</label>
+          <input type="number" id="blockToOffInput" class="modal-input" min="0" max="120" value="15">
+          <div class="rest-info">Post-flight duty time after parking before duty ends. Default: 15 (Frontier). Rest begins at duty-off.</div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Caution Alert</div>
+
+        <div class="modal-input-group">
+          <label class="modal-input-label">Caution period (minutes before wheels-up)</label>
+          <input type="number" id="cautionInput" class="modal-input" min="0" max="180" value="30">
+          <div class="rest-info">Shows yellow alert when wheels-up time is within this period from current time.</div>
+        </div>
+      </div>
+
+      <div class="modal-buttons">
+        <button class="btn" id="resetSettingsBtn">Reset defaults</button>
+        <button class="btn btn-primary" id="saveSettingsBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Constants & utilities
+    const PAD = (n) => ("0" + n).slice(-2);
+    const HM = (m) => {
+      if (m < 0) return "-" + HM(-m);
+      return Math.floor(m / 60) + ":" + PAD(m % 60);
+    };
+    const TO_MIN = (s) => {
+      if (!s || typeof s !== "string" || !s.includes(":")) return 0;
+      const [h, m] = s.split(":").map(Number);
+      if (isNaN(h) || isNaN(m)) return 0;
+      return h * 60 + m;
+    };
+    
+    // Timezone offsets from UTC (standard time)
+    const timezoneOffsets = {
+      "HST": -10,  // Hawaii
+      "AKST": -9,  // Alaska
+      "PST": -8,   // Pacific
+      "MST": -7,   // Mountain
+      "CST": -6,   // Central
+      "EST": -5,   // Eastern
+      "COT": -5,   // Colombia (Bogota/Medellin/Cali) - no DST
+      "AST": -4    // Atlantic (San Juan PR) - no DST
+    };
+    
+    const getTZOffset = (tzName) => {
+      return timezoneOffsets[tzName] || 0;
+    };
+    
+    // Convert local time to Zulu (UTC)
+    const toZulu = (localTimeStr, tzOffset) => {
+      const localMin = TO_MIN(localTimeStr);
+      const zuluMin = localMin - (tzOffset * 60);
+      const wrappedMin = ((zuluMin % 1440) + 1440) % 1440; // Handle day wraparound
+      return HM(wrappedMin);
+    };
+    
+    // Format time display with local and Zulu
+    const timeDisplay = (localTimeStr, tzOffset) => {
+      const zulu = toZulu(localTimeStr, tzOffset);
+      return `${localTimeStr} (Z: ${zulu})`;
+    };
+
+    // Break a departure-local end time (in continuous minutes) into
+    // departure-local, arrival-local, and Zulu clock times — three labeled lines.
+    const endBreakdownHTML = (depLocalMin, depOffset, arrOffset) => {
+      const depClock = (((depLocalMin % 1440) + 1440) % 1440);
+      const zMin = (((depClock - depOffset * 60) % 1440) + 1440) % 1440;
+      const aMin = (((depClock + (arrOffset - depOffset) * 60) % 1440) + 1440) % 1440;
+      return `<div><span class="tz-tag">DEP</span> ${HM(depClock)}</div>` +
+             `<div><span class="tz-tag">ARR</span> ${HM(aMin)}</div>` +
+             `<div><span class="tz-tag">Z</span>&nbsp;&nbsp; ${HM(zMin)}</div>`;
+    };
+
+    // Format one wheels-up time (departure local + Z), or "—" if the flight
+    // can't fit before that limit (wheels-up would fall before duty-on).
+    const wheelsUpCell = (wuMin, dutyOnMin, depOffset) => {
+      if (wuMin < dutyOnMin) return "—";
+      const clock = HM((((wuMin % 1440) + 1440) % 1440));
+      return `${clock} <span class="tz-tag">Z</span> ${toZulu(clock, depOffset)}`;
+    };
+
+    // Map a clock time (minutes-of-day, 0-1439) onto a continuous timeline
+    // anchored at the duty-on instant. A clock time earlier in the day than
+    // duty-on is treated as the NEXT day (past midnight). A small pre-duty
+    // buffer keeps a pre-show check from wrapping. This is what makes every
+    // cross-midnight comparison correct.
+    const PRE_DUTY_BUFFER = 180; // minutes a check may precede duty-on without wrapping
+    const toContinuous = (clockMin, anchorMin) => {
+      let c = clockMin;
+      if (c < anchorMin - PRE_DUTY_BUFFER) c += 1440;
+      return c;
+    };
+
+    // Settings
+    function loadSettings() {
+      try {
+        const stored = localStorage.getItem("dutyDayTrackerSettings");
+        if (stored) {
+          const s = JSON.parse(stored);
+          if (s.minRest === undefined) s.minRest = 660;
+          if (s.cautionPeriod === undefined) s.cautionPeriod = 30;
+          if (s.blockToOff === undefined) s.blockToOff = 15;
+          return s;
+        }
+      } catch (e) {}
+      return { minRest: 660, cautionPeriod: 30, blockToOff: 15 };
+    }
+
+    function saveSettings(settings) {
+      try {
+        localStorage.setItem("dutyDayTrackerSettings", JSON.stringify(settings));
+      } catch (e) {}
+    }
+
+    let settings = loadSettings();
+
+    // Current time tracks the device clock and updates live. Read-only so it
+    // always reflects real time — a stale manual value could misrepresent legality.
+    function setCurrentTimeNow() {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, "0");
+      const mm = String(now.getMinutes()).padStart(2, "0");
+      document.getElementById("currentTime").value = `${hh}:${mm}`;
+    }
+
+    setCurrentTimeNow();
+    setInterval(() => { setCurrentTimeNow(); updateDisplay(); }, 30000);
+
+    // Part 117 Table B — Unaugmented FDP limits
+    // Rows: acclimated start-time bands. Columns: segments 1,2,3,4,5,6,7+
+    function getFDPLimit(segments, dutyStartMin) {
+      const seg = Math.max(1, Math.min(7, segments)); // clamp; 7 = "7+"
+      const col = seg - 1;
+      const bands = [
+        { start: 0,    end: 239,  fdp: [9,   9,   9,   9,   9,    9,   9   ] }, // 0000-0359
+        { start: 240,  end: 299,  fdp: [10,  10,  10,  10,  9,    9,   9   ] }, // 0400-0459
+        { start: 300,  end: 359,  fdp: [12,  12,  12,  12,  11.5, 11,  10.5] }, // 0500-0559
+        { start: 360,  end: 419,  fdp: [13,  13,  12,  12,  11.5, 11,  10.5] }, // 0600-0659
+        { start: 420,  end: 719,  fdp: [14,  14,  13,  13,  12.5, 12,  11.5] }, // 0700-1159
+        { start: 720,  end: 779,  fdp: [13,  13,  13,  13,  12.5, 12,  11.5] }, // 1200-1259
+        { start: 780,  end: 1019, fdp: [12,  12,  12,  12,  11.5, 11,  10.5] }, // 1300-1659
+        { start: 1020, end: 1319, fdp: [12,  12,  11,  11,  10,   9,   9   ] }, // 1700-2159
+        { start: 1320, end: 1379, fdp: [11,  11,  10,  10,  9,    9,   9   ] }, // 2200-2259
+        { start: 1380, end: 1439, fdp: [10,  10,  10,  9,   9,    9,   9   ] }, // 2300-2359
+      ];
+      const m = ((dutyStartMin % 1440) + 1440) % 1440;
+      const band = bands.find(b => m >= b.start && m <= b.end) || bands[0];
+      return Math.round(band.fdp[col] * 60); // minutes
+    }
+
+    // Returns FDP picture for one pilot.
+    // FDP starts at duty-on (report/show time) for BOTH line and reserve — Table B
+    // is entered at that time. (Part 117's RAP+FDP 16h ceiling needs a separate
+    // availability-start time, which this single-anchor model does not capture.)
+    function calcPilot(dutyOnStr, segments, isReserve) {
+      const dutyOnMin = TO_MIN(dutyOnStr);
+      const tableFDP = getFDPLimit(segments, dutyOnMin); // Table B, by duty-on time
+      const fdpLimit = tableFDP;
+
+      const fpdEndMin = dutyOnMin + fdpLimit;
+      const fpdEndTime = HM(fpdEndMin % 1440);
+
+      return {
+        dutyOnMin,
+        tableFDP,
+        fdpLimit,
+        fpdEndMin,
+        fpdEndTime,
+        isReserve
+      };
+    }
+
+    function updateDisplay() {
+      // Get timezone offsets from dropdown values
+      const depTZName = document.getElementById("depTZ").value;
+      const depTZ = getTZOffset(depTZName);
+      const arrTZName = document.getElementById("arrTZ").value;
+      const arrTZ = getTZOffset(arrTZName);
+      
+      // Get current time
+      const currentTimeStr = document.getElementById("currentTime").value;
+      const currentTimeMin = currentTimeStr ? TO_MIN(currentTimeStr) : 0;
+
+      // Current time Zulu reference (relative to departure timezone)
+      if (currentTimeStr && currentTimeStr.includes(":")) {
+        document.getElementById("currentTimeZ").textContent = "Z: " + toZulu(currentTimeStr, depTZ);
+      } else {
+        document.getElementById("currentTimeZ").textContent = "Z: —";
+      }
+
+      // Captain
+      const capDutyOn = document.getElementById("capDutyOn").value;
+      const capSegments = parseInt(document.getElementById("capSegments").value);
+      const capStatus = document.querySelector('input[name="capStatus"]:checked').value;
+      const capIsReserve = capStatus === 'reserve';
+      const cap = calcPilot(capDutyOn, capSegments, capIsReserve);
+
+      document.getElementById("capFdpLimit").textContent = HM(cap.fdpLimit);
+      document.getElementById("capFdpEnd").innerHTML = endBreakdownHTML(cap.fpdEndMin, depTZ, arrTZ);
+      document.getElementById("capRemaining").textContent = HM(cap.fdpLimit);
+
+      // Extension (FDP + 2 hours)
+      const capExtMin = cap.fpdEndMin + 120;
+      document.getElementById("capExtension").innerHTML = endBreakdownHTML(capExtMin, depTZ, arrTZ);
+
+      // First Officer
+      const foDutyOn = document.getElementById("foDutyOn").value;
+      const foSegments = parseInt(document.getElementById("foSegments").value);
+      const foStatus = document.querySelector('input[name="foStatus"]:checked').value;
+      const foIsReserve = foStatus === 'reserve';
+      const fo = calcPilot(foDutyOn, foSegments, foIsReserve);
+
+      document.getElementById("foFdpLimit").textContent = HM(fo.fdpLimit);
+      document.getElementById("foFdpEnd").innerHTML = endBreakdownHTML(fo.fpdEndMin, depTZ, arrTZ);
+      document.getElementById("foRemaining").textContent = HM(fo.fdpLimit);
+
+      // Extension (FDP + 2 hours)
+      const foExtMin = fo.fpdEndMin + 120;
+      document.getElementById("foExtension").innerHTML = endBreakdownHTML(foExtMin, depTZ, arrTZ);
+
+      // Get flight details (convert from HH:MM time format to minutes)
+      const flightTimeStr = document.getElementById("flightTime").value;
+      const flightTime = flightTimeStr ? TO_MIN(flightTimeStr) : 0;
+      const taxiInStr = document.getElementById("taxiIn").value;
+      const taxiIn = taxiInStr ? TO_MIN(taxiInStr) : 0;
+
+      // Captain wheels-up calculation
+      // Latest wheels-up = FDP end - flight time - taxi in (all continuous minutes)
+      const capFDPEndMin = cap.fpdEndMin;
+      const capWheelsUpNeededMin = flightTime + taxiIn;
+      const capLatestWheelsUpMin = capFDPEndMin - capWheelsUpNeededMin;
+      // Current time mapped onto the Captain's duty-on timeline (midnight-safe)
+      const capCurrentCont = toContinuous(currentTimeMin, cap.dutyOnMin);
+
+      // Max (with 2h extension) wheels-up
+      const capLatestWheelsUpMaxMin = (capFDPEndMin + 120) - capWheelsUpNeededMin;
+
+      // Two-line wheels-up display: normal (Ends) and extended (Max +2h)
+      document.getElementById("capWheelsUp").innerHTML =
+        `<div><span class="tz-tag">ENDS</span> ${wheelsUpCell(capLatestWheelsUpMin, cap.dutyOnMin, depTZ)}</div>` +
+        `<div><span class="tz-tag">MAX</span>&nbsp; ${wheelsUpCell(capLatestWheelsUpMaxMin, cap.dutyOnMin, depTZ)}</div>`;
+
+      let capWheelsUpStatus = "illegal"; // legal, caution, illegal — keyed to the Ends limit
+
+      if (capLatestWheelsUpMin >= cap.dutyOnMin) {
+        const minutesUntil = capLatestWheelsUpMin - capCurrentCont;
+        if (minutesUntil < 0) {
+          capWheelsUpStatus = "illegal";
+        } else if (minutesUntil <= settings.cautionPeriod) {
+          capWheelsUpStatus = "caution";
+        } else {
+          capWheelsUpStatus = "legal";
+        }
+        const absMin = Math.abs(minutesUntil);
+        document.getElementById("capRemainAfter").textContent =
+          minutesUntil < 0
+            ? `Past Ends cutoff by ${HM(absMin)} (extension may apply)`
+            : `Time to Ends cutoff: ${HM(absMin)}`;
+      } else {
+        capWheelsUpStatus = "illegal";
+        document.getElementById("capRemainAfter").textContent =
+          "Flight time exceeds available FDP";
+      }
+
+      // Status color, keyed to the Ends limit
+      if (capWheelsUpStatus === "legal") {
+        document.getElementById("capWheelsStatus").className = "wheels-up-box legal";
+        document.getElementById("capWheelsStatusText").textContent = "✓ LEGAL";
+        document.getElementById("capWheelsStatusText").className = "wheels-up-time green";
+      } else if (capWheelsUpStatus === "caution") {
+        document.getElementById("capWheelsStatus").className = "wheels-up-box caution";
+        document.getElementById("capWheelsStatusText").textContent = "⚠ CAUTION";
+        document.getElementById("capWheelsStatusText").className = "wheels-up-time caution";
+      } else {
+        document.getElementById("capWheelsStatus").className = "wheels-up-box illegal";
+        document.getElementById("capWheelsStatusText").textContent = "✗ EXPIRED";
+        document.getElementById("capWheelsStatusText").className = "wheels-up-time red";
+      }
+
+      // First Officer wheels-up calculation
+      const foFDPEndMin = fo.fpdEndMin;
+      const foLatestWheelsUpMin = foFDPEndMin - capWheelsUpNeededMin;
+      const foCurrentCont = toContinuous(currentTimeMin, fo.dutyOnMin);
+
+      // Max (with 2h extension) wheels-up
+      const foLatestWheelsUpMaxMin = (foFDPEndMin + 120) - capWheelsUpNeededMin;
+
+      document.getElementById("foWheelsUp").innerHTML =
+        `<div><span class="tz-tag">ENDS</span> ${wheelsUpCell(foLatestWheelsUpMin, fo.dutyOnMin, depTZ)}</div>` +
+        `<div><span class="tz-tag">MAX</span>&nbsp; ${wheelsUpCell(foLatestWheelsUpMaxMin, fo.dutyOnMin, depTZ)}</div>`;
+
+      let foWheelsUpStatus = "illegal"; // legal, caution, illegal — keyed to the Ends limit
+
+      if (foLatestWheelsUpMin >= fo.dutyOnMin) {
+        const minutesUntil = foLatestWheelsUpMin - foCurrentCont;
+        if (minutesUntil < 0) {
+          foWheelsUpStatus = "illegal";
+        } else if (minutesUntil <= settings.cautionPeriod) {
+          foWheelsUpStatus = "caution";
+        } else {
+          foWheelsUpStatus = "legal";
+        }
+        const absMin = Math.abs(minutesUntil);
+        document.getElementById("foRemainAfter").textContent =
+          minutesUntil < 0
+            ? `Past Ends cutoff by ${HM(absMin)} (extension may apply)`
+            : `Time to Ends cutoff: ${HM(absMin)}`;
+      } else {
+        foWheelsUpStatus = "illegal";
+        document.getElementById("foRemainAfter").textContent =
+          "Flight time exceeds available FDP";
+      }
+
+      // Status color, keyed to the Ends limit
+      if (foWheelsUpStatus === "legal") {
+        document.getElementById("foWheelsStatus").className = "wheels-up-box legal";
+        document.getElementById("foWheelsStatusText").textContent = "✓ LEGAL";
+        document.getElementById("foWheelsStatusText").className = "wheels-up-time green";
+      } else if (foWheelsUpStatus === "caution") {
+        document.getElementById("foWheelsStatus").className = "wheels-up-box caution";
+        document.getElementById("foWheelsStatusText").textContent = "⚠ CAUTION";
+        document.getElementById("foWheelsStatusText").className = "wheels-up-time caution";
+      } else {
+        document.getElementById("foWheelsStatus").className = "wheels-up-box illegal";
+        document.getElementById("foWheelsStatusText").textContent = "✗ EXPIRED";
+        document.getElementById("foWheelsStatusText").className = "wheels-up-time red";
+      }
+
+      // Rest check
+      const blockInTime = document.getElementById("blockInTime").value;
+      const restPanel = document.getElementById("restCheckPanel");
+
+      if (blockInTime && blockInTime.includes(":")) {
+        const blockInMin = TO_MIN(blockInTime);
+        const dutyOffMin = blockInMin + settings.blockToOff;   // duty ends after post-flight duty
+        const nextDutyMin = dutyOffMin + settings.minRest;      // rest begins at duty-off
+        const dutyOffClock = HM(dutyOffMin % 1440);
+        const nextDutyClock = HM(nextDutyMin % 1440);
+
+        document.getElementById("offDutyTime").textContent = timeDisplay(dutyOffClock, arrTZ);
+        document.getElementById("minRest").textContent = HM(settings.minRest);
+        document.getElementById("nextDutyTime").textContent = timeDisplay(nextDutyClock, arrTZ);
+        restPanel.style.display = "grid";
+      } else {
+        restPanel.style.display = "none";
+      }
+
+      // At Hotel — earliest legal show = at-hotel base + min rest + optional transport
+      const atHotel = document.getElementById("atHotelTime").value;
+      if (atHotel && atHotel.includes(":")) {
+        const atHotelMin = TO_MIN(atHotel);
+        const transport = parseInt(document.getElementById("hotelTransport").value) || 0;
+        const showMin = atHotelMin + settings.minRest + transport;
+        const showClock = HM(showMin % 1440);
+        document.getElementById("hotelShowTime").textContent = timeDisplay(showClock, arrTZ);
+      } else {
+        document.getElementById("hotelShowTime").textContent = "—";
+      }
+    }
+
+    // Event listeners
+    document.getElementById("capSegments").addEventListener("change", updateDisplay);
+    document.querySelectorAll('input[name="capStatus"]').forEach(radio => {
+      radio.addEventListener("change", () => {
+        const isReserve = document.querySelector('input[name="capStatus"]:checked').value === 'reserve';
+        document.getElementById("capDutyOnLabel").textContent = isReserve ? "Duty on — RDP start" : "Duty on — show time";
+        updateDisplay();
+      });
+    });
+    document.getElementById("foSegments").addEventListener("change", updateDisplay);
+    document.querySelectorAll('input[name="foStatus"]').forEach(radio => {
+      radio.addEventListener("change", () => {
+        const isReserve = document.querySelector('input[name="foStatus"]:checked').value === 'reserve';
+        document.getElementById("foDutyOnLabel").textContent = isReserve ? "Duty on — RDP start" : "Duty on — show time";
+        updateDisplay();
+      });
+    });
+    document.getElementById("flightTime").addEventListener("change", updateDisplay);
+    document.getElementById("flightTime").addEventListener("input", updateDisplay);
+    document.getElementById("taxiIn").addEventListener("change", updateDisplay);
+    document.getElementById("taxiIn").addEventListener("input", updateDisplay);
+    document.getElementById("depTZ").addEventListener("change", updateDisplay);
+    document.getElementById("arrTZ").addEventListener("change", updateDisplay);
+
+    // Settings modal
+    const settingsModal = document.getElementById("settingsModal");
+    const settingsBtn = document.getElementById("settingsBtn");
+    const closeSettingsBtn = document.getElementById("closeSettingsBtn");
+    const saveSettingsBtn = document.getElementById("saveSettingsBtn");
+    const resetSettingsBtn = document.getElementById("resetSettingsBtn");
+    const minRestInput = document.getElementById("minRestInput");
+
+    settingsBtn.addEventListener("click", () => {
+      minRestInput.value = settings.minRest;
+      document.getElementById("cautionInput").value = settings.cautionPeriod;
+      document.getElementById("blockToOffInput").value = settings.blockToOff;
+      settingsModal.classList.add("open");
+    });
+
+    closeSettingsBtn.addEventListener("click", () => {
+      settingsModal.classList.remove("open");
+    });
+
+    settingsModal.addEventListener("click", (e) => {
+      if (e.target === settingsModal) {
+        settingsModal.classList.remove("open");
+      }
+    });
+
+    // 24hr time entry: type up to 4 digits (HHMM) and the colon auto-fills — e.g. 0400 -> 04:00
+    function formatTimeField(el) {
+      const digits = el.value.replace(/[^0-9]/g, "").slice(0, 4);
+      el.value = digits.length >= 3
+        ? digits.slice(0, 2) + ":" + digits.slice(2)
+        : digits;
+    }
+    function wireTimeField(id) {
+      const el = document.getElementById(id);
+      el.addEventListener("input", () => { formatTimeField(el); updateDisplay(); });
+      el.addEventListener("change", updateDisplay);
+    }
+    ["capDutyOn", "foDutyOn", "blockInTime", "atHotelTime"].forEach(wireTimeField);
+
+    // Snap current time into the At Hotel base
+    document.getElementById("snapHotelBtn").addEventListener("click", () => {
+      document.getElementById("atHotelTime").value = document.getElementById("currentTime").value;
+      updateDisplay();
+    });
+    document.getElementById("hotelTransport").addEventListener("input", updateDisplay);
+
+    saveSettingsBtn.addEventListener("click", () => {
+      settings.minRest = parseInt(minRestInput.value) || 660;
+      settings.cautionPeriod = parseInt(document.getElementById("cautionInput").value) || 30;
+      settings.blockToOff = parseInt(document.getElementById("blockToOffInput").value);
+      if (isNaN(settings.blockToOff)) settings.blockToOff = 15;
+      saveSettings(settings);
+      updateDisplay();
+      settingsModal.classList.remove("open");
+    });
+
+    resetSettingsBtn.addEventListener("click", () => {
+      settings = { minRest: 660, cautionPeriod: 30, blockToOff: 15 };
+      saveSettings(settings);
+      minRestInput.value = 660;
+      document.getElementById("cautionInput").value = 30;
+      document.getElementById("blockToOffInput").value = 15;
+      updateDisplay();
+    });
+
+    // Initial display
+    updateDisplay();
+  </script>
+</body>
+</html>
