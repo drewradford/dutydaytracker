@@ -1228,10 +1228,6 @@
         updateDisplay();
       });
     });
-    document.getElementById("flightTime").addEventListener("change", updateDisplay);
-    document.getElementById("flightTime").addEventListener("input", updateDisplay);
-    document.getElementById("taxiIn").addEventListener("change", updateDisplay);
-    document.getElementById("taxiIn").addEventListener("input", updateDisplay);
     document.getElementById("depTZ").addEventListener("change", updateDisplay);
     document.getElementById("arrTZ").addEventListener("change", updateDisplay);
 
@@ -1267,12 +1263,26 @@
         ? digits.slice(0, 2) + ":" + digits.slice(2)
         : digits;
     }
+    // Duration entry (h:mm): colon sits before the last two digits so single-digit
+    // hours work — 320 -> 3:20, 010 -> 0:10, 0320 -> 03:20.
+    function formatDurationField(el) {
+      const digits = el.value.replace(/[^0-9]/g, "").slice(0, 4);
+      el.value = digits.length >= 3
+        ? digits.slice(0, digits.length - 2) + ":" + digits.slice(-2)
+        : digits;
+    }
     function wireTimeField(id) {
       const el = document.getElementById(id);
       el.addEventListener("input", () => { formatTimeField(el); updateDisplay(); });
       el.addEventListener("change", updateDisplay);
     }
+    function wireDurationField(id) {
+      const el = document.getElementById(id);
+      el.addEventListener("input", () => { formatDurationField(el); updateDisplay(); });
+      el.addEventListener("change", updateDisplay);
+    }
     ["capDutyOn", "foDutyOn", "blockInTime", "atHotelTime"].forEach(wireTimeField);
+    ["flightTime", "taxiIn"].forEach(wireDurationField);
 
     // Snap current time into the At Hotel base
     document.getElementById("snapHotelBtn").addEventListener("click", () => {
