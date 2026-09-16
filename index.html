@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Duty Day Legality Tracker</title>
   <!-- PWA -->
   <meta name="theme-color" content="#0F141A">
@@ -61,28 +61,30 @@
     }
 
     .header {
+      position: relative;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
+      text-align: center;
+      gap: 6px;
       margin-bottom: 24px;
-      flex-wrap: wrap;
-      gap: 12px;
+      padding-top: max(4px, env(safe-area-inset-top));
     }
 
     .header h1 {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 600;
       margin: 0;
-      flex: 1;
-      min-width: 150px;
     }
 
     .current-time {
       display: flex;
-      align-items: center;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: center;
       gap: 8px;
+      flex-wrap: wrap;
       font-size: 13px;
-      flex-shrink: 0;
     }
 
     .current-time label {
@@ -93,32 +95,32 @@
       white-space: nowrap;
     }
 
-    .current-time input {
+    .current-time input,
+    .current-time input[readonly] {
       font-family: 'IBM Plex Mono', monospace;
-      background: var(--bg);
-      border: 1px solid var(--line);
-      border-radius: 6px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
       color: var(--ink);
-      padding: 6px 8px;
-      font-size: 12px;
-      width: 85px;
+      padding: 0;
+      font-size: 16px;
+      font-weight: 500;
+      width: 64px;
       outline: none;
+      cursor: default;
     }
 
     .current-time input:focus {
-      border-color: var(--accent);
       outline: none;
-    }
-
-    .current-time input[readonly] {
-      cursor: default;
-      opacity: 0.9;
+      box-shadow: none;
     }
 
     .tz-ref {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      color: var(--dim);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink);
       white-space: nowrap;
     }
 
@@ -146,19 +148,8 @@
     }
 
     @media (max-width: 600px) {
-      .header {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
       .header h1 {
-        font-size: 18px;
-        width: 100%;
-      }
-
-      .current-time {
-        width: 100%;
-        justify-content: space-between;
+        font-size: 20px;
       }
 
       .current-time label {
@@ -166,29 +157,12 @@
       }
 
       .current-time input {
-        width: 100px;
-        font-size: 13px;
-      }
-
-      .settings-btn {
-        width: 100%;
+        width: 64px;
+        font-size: 16px;
       }
     }
 
     @media (max-width: 768px) {
-      .header {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .header h1 {
-        font-size: 18px;
-      }
-
-      .current-time {
-        justify-content: space-between;
-      }
-
       .grid-2 {
         grid-template-columns: 1fr;
       }
@@ -203,6 +177,9 @@
     }
 
     .settings-btn {
+      position: absolute;
+      top: max(4px, env(safe-area-inset-top));
+      right: 0;
       background: none;
       border: 1px solid var(--line);
       color: var(--dim);
@@ -283,6 +260,23 @@
       font-size: 14px;
     }
 
+    select {
+      font-family: 'IBM Plex Mono', monospace;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      padding: 8px 12px;
+      font-size: 14px;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    select option {
+      background: var(--bg);
+      color: var(--ink);
+    }
+
     input:focus {
       outline: none;
       border-color: var(--amber);
@@ -322,6 +316,28 @@
 
     .stat-value.red {
       color: var(--red);
+    }
+
+    /* Aligned label/value rows for the rest-check + at-hotel results */
+    .rest-rows {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px 14px;
+      align-items: baseline;
+    }
+    .rest-lbl {
+      color: var(--dim);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .rest-val {
+      color: var(--ink);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      font-weight: 500;
+      text-align: right;
+      white-space: nowrap;
     }
 
     .stat-value.breakdown {
@@ -411,6 +427,59 @@
     .wheels-up-time.breakdown {
       font-size: 14px;
       line-height: 1.5;
+    }
+
+    /* Wheels-up two-box panel — each box carries its own color */
+    .wu-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .wu-box {
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 12px 13px;
+      text-align: center;
+    }
+    .wu-box.green { border-color: var(--green); background: rgba(91,192,138,.07); }
+    .wu-box.caution { border-color: var(--amber); background: rgba(240,169,59,.08); }
+    .wu-box.expired { border-color: var(--red); background: rgba(224,107,107,.09); }
+    .wu-title {
+      font-size: 12px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 500;
+      min-height: 2.6em;
+      margin-bottom: 5px;
+    }
+    .wu-time {
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 26px;
+      line-height: 1;
+    }
+    .wu-z {
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--ink);
+      font-weight: 500;
+      font-size: 16px;
+      display: block;
+      margin-top: 4px;
+    }
+    .wu-count {
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--ink);
+      font-size: 16px;
+      text-align: center;
+      margin-top: 6px;
+      min-height: 1em;
+    }
+    .wu-count .wu-count-lbl {
+      color: var(--dim);
+      font-size: 12px;
     }
 
     .wheels-up-time.green {
@@ -587,7 +656,7 @@
       <div class="current-time">
         <label>Current time (dep local / Z)</label>
         <input type="text" id="currentTime" readonly aria-readonly="true">
-        <span id="currentTimeZ" class="tz-ref">Z: —</span>
+        <span id="currentTimeZ" class="tz-ref">Z —</span>
       </div>
       <button class="settings-btn" id="settingsBtn" title="Settings">
         <i class="fas fa-cog"></i>
@@ -656,7 +725,13 @@
           </div>
           <div class="input-wrapper">
             <label class="input-label">Segments</label>
-            <input type="number" id="capSegments" min="1" max="9" value="3">
+            <select id="capSegments">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
           </div>
         </div>
 
@@ -697,17 +772,24 @@
 
         <div class="wheels-up-section">
           Upcoming flight legal window
-          <div class="wheels-up-grid">
-            <div class="wheels-up-box">
-              <div class="stat-label">Latest wheels-up — Ends / Max</div>
-              <div class="wheels-up-time mono breakdown" id="capWheelsUp">—</div>
+          <div class="wu-cols">
+            <div class="wu-col">
+              <div class="wu-box" id="capWuEnds">
+                <div class="wu-title">Wheels up</div>
+                <div class="wu-time" id="capWuEndsTime">—</div>
+                <span class="wu-z" id="capWuEndsZ"></span>
+              </div>
+              <div class="wu-count" id="capWuEndsCount"></div>
             </div>
-            <div class="wheels-up-box legal" id="capWheelsStatus">
-              <div class="stat-label">Executable</div>
-              <div class="wheels-up-time green" id="capWheelsStatusText">✓ YES</div>
+            <div class="wu-col">
+              <div class="wu-box" id="capWuMax">
+                <div class="wu-title">Wheels up w/ ext</div>
+                <div class="wu-time" id="capWuMaxTime">—</div>
+                <span class="wu-z" id="capWuMaxZ"></span>
+              </div>
+              <div class="wu-count" id="capWuMaxCount"></div>
             </div>
           </div>
-          <div class="rest-info" id="capRemainAfter">Remaining FDP after landing: 10:00</div>
         </div>
       </div>
 
@@ -722,7 +804,13 @@
           </div>
           <div class="input-wrapper">
             <label class="input-label">Segments</label>
-            <input type="number" id="foSegments" min="1" max="9" value="3">
+            <select id="foSegments">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
           </div>
         </div>
 
@@ -763,17 +851,24 @@
 
         <div class="wheels-up-section">
           Upcoming flight legal window
-          <div class="wheels-up-grid">
-            <div class="wheels-up-box">
-              <div class="stat-label">Latest wheels-up — Ends / Max</div>
-              <div class="wheels-up-time mono breakdown" id="foWheelsUp">—</div>
+          <div class="wu-cols">
+            <div class="wu-col">
+              <div class="wu-box" id="foWuEnds">
+                <div class="wu-title">Wheels up</div>
+                <div class="wu-time" id="foWuEndsTime">—</div>
+                <span class="wu-z" id="foWuEndsZ"></span>
+              </div>
+              <div class="wu-count" id="foWuEndsCount"></div>
             </div>
-            <div class="wheels-up-box legal" id="foWheelsStatus">
-              <div class="stat-label">Executable</div>
-              <div class="wheels-up-time green" id="foWheelsStatusText">✓ YES</div>
+            <div class="wu-col">
+              <div class="wu-box" id="foWuMax">
+                <div class="wu-title">Wheels up w/ ext</div>
+                <div class="wu-time" id="foWuMaxTime">—</div>
+                <span class="wu-z" id="foWuMaxZ"></span>
+              </div>
+              <div class="wu-count" id="foWuMaxCount"></div>
             </div>
           </div>
-          <div class="rest-info" id="foRemainAfter">Remaining FDP after landing: 10:00</div>
         </div>
       </div>
     </div>
@@ -787,23 +882,13 @@
         <input type="text" id="blockInTime" value="" placeholder="HH:MM" maxlength="5" inputmode="numeric">
       </div>
 
-      <div class="stat-grid" id="restCheckPanel" style="display: none;">
-        <div class="stat">
-          <div class="stat-label">Duty off (block-in + post-flight)</div>
-          <div class="stat-value mono" id="offDutyTime">—</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Min rest required</div>
-          <div class="stat-value mono" id="minRest">10:00</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Earliest next duty</div>
-          <div class="stat-value mono" id="nextDutyTime">—</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">&nbsp;</div>
-          <div class="stat-value" style="visibility: hidden;">—</div>
-        </div>
+      <div class="rest-rows" id="restCheckPanel" style="display: none;">
+        <span class="rest-lbl">Duty off (block-in + post-flight)</span>
+        <span class="rest-val" id="offDutyTime">—</span>
+        <span class="rest-lbl">Min rest required</span>
+        <span class="rest-val" id="minRest">—</span>
+        <span class="rest-lbl">Earliest next duty</span>
+        <span class="rest-val" id="nextDutyTime">—</span>
       </div>
 
       <!-- At Hotel — earliest legal show -->
@@ -820,9 +905,9 @@
           </div>
         </div>
         <button class="btn" id="snapHotelBtn" style="width: 100%; margin-top: 8px;">Snap current time</button>
-        <div class="stat" style="margin-top: 12px;">
-          <div class="stat-label">Earliest legal show — local / Z</div>
-          <div class="stat-value mono" id="hotelShowTime">—</div>
+        <div class="rest-rows" style="margin-top: 14px;">
+          <span class="rest-lbl">Earliest legal show</span>
+          <span class="rest-val" id="hotelShowTime">—</span>
         </div>
       </div>
     </div>
@@ -924,12 +1009,31 @@
              `<div><span class="tz-tag">Z</span>&nbsp;&nbsp; ${HM(zMin)}</div>`;
     };
 
-    // Format one wheels-up time (departure local + Z), or "—" if the flight
-    // can't fit before that limit (wheels-up would fall before duty-on).
-    const wheelsUpCell = (wuMin, dutyOnMin, depOffset) => {
-      if (wuMin < dutyOnMin) return "—";
-      const clock = HM((((wuMin % 1440) + 1440) % 1440));
-      return `${clock} <span class="tz-tag">Z</span> ${toZulu(clock, depOffset)}`;
+    // Paint one wheels-up box: its own color (green/caution/expired) by its own
+    // cutoff, plus the departure-local time and Zulu (all white), and the countdown
+    // below the box. "—" if the flight can't fit before that cutoff at all.
+    const renderWuBox = (boxId, timeId, zId, countId, cutoffMin, dutyOnMin, currentCont, depOffset) => {
+      const box = document.getElementById(boxId);
+      const timeEl = document.getElementById(timeId);
+      const zEl = document.getElementById(zId);
+      const countEl = document.getElementById(countId);
+      if (cutoffMin < dutyOnMin) {
+        box.className = "wu-box expired";
+        timeEl.textContent = "—";
+        zEl.textContent = "";
+        countEl.innerHTML = "";
+        return;
+      }
+      const clock = HM((((cutoffMin % 1440) + 1440) % 1440));
+      timeEl.textContent = clock;
+      zEl.textContent = "Z " + toZulu(clock, depOffset);
+      const until = cutoffMin - currentCont;
+      const state = until < 0 ? "expired" : (until <= settings.cautionPeriod ? "caution" : "green");
+      box.className = "wu-box " + state;
+      const absMin = Math.abs(until);
+      countEl.innerHTML = until < 0
+        ? `${HM(absMin)} <span class="wu-count-lbl">past</span>`
+        : `${HM(absMin)} <span class="wu-count-lbl">left</span>`;
     };
 
     // Map a clock time (minutes-of-day, 0-1439) onto a continuous timeline
@@ -1036,9 +1140,9 @@
 
       // Current time Zulu reference (relative to departure timezone)
       if (currentTimeStr && currentTimeStr.includes(":")) {
-        document.getElementById("currentTimeZ").textContent = "Z: " + toZulu(currentTimeStr, depTZ);
+        document.getElementById("currentTimeZ").textContent = "Z " + toZulu(currentTimeStr, depTZ);
       } else {
-        document.getElementById("currentTimeZ").textContent = "Z: —";
+        document.getElementById("currentTimeZ").textContent = "Z —";
       }
 
       // Captain
@@ -1084,100 +1188,20 @@
       const capLatestWheelsUpMin = capFDPEndMin - capWheelsUpNeededMin;
       // Current time mapped onto the Captain's duty-on timeline (midnight-safe)
       const capCurrentCont = toContinuous(currentTimeMin, cap.dutyOnMin);
-
       // Max (with 2h extension) wheels-up
       const capLatestWheelsUpMaxMin = (capFDPEndMin + 120) - capWheelsUpNeededMin;
 
-      // Two-line wheels-up display: normal (Ends) and extended (Max +2h)
-      document.getElementById("capWheelsUp").innerHTML =
-        `<div><span class="tz-tag">ENDS</span> ${wheelsUpCell(capLatestWheelsUpMin, cap.dutyOnMin, depTZ)}</div>` +
-        `<div><span class="tz-tag">MAX</span>&nbsp; ${wheelsUpCell(capLatestWheelsUpMaxMin, cap.dutyOnMin, depTZ)}</div>`;
-
-      let capWheelsUpStatus = "illegal"; // legal, caution, illegal — keyed to the Ends limit
-
-      if (capLatestWheelsUpMin >= cap.dutyOnMin) {
-        const minutesUntil = capLatestWheelsUpMin - capCurrentCont;
-        if (minutesUntil < 0) {
-          capWheelsUpStatus = "illegal";
-        } else if (minutesUntil <= settings.cautionPeriod) {
-          capWheelsUpStatus = "caution";
-        } else {
-          capWheelsUpStatus = "legal";
-        }
-        const absMin = Math.abs(minutesUntil);
-        document.getElementById("capRemainAfter").textContent =
-          minutesUntil < 0
-            ? `Past Ends cutoff by ${HM(absMin)} (extension may apply)`
-            : `Time to Ends cutoff: ${HM(absMin)}`;
-      } else {
-        capWheelsUpStatus = "illegal";
-        document.getElementById("capRemainAfter").textContent =
-          "Flight time exceeds available FDP";
-      }
-
-      // Status color, keyed to the Ends limit
-      if (capWheelsUpStatus === "legal") {
-        document.getElementById("capWheelsStatus").className = "wheels-up-box legal";
-        document.getElementById("capWheelsStatusText").textContent = "✓ LEGAL";
-        document.getElementById("capWheelsStatusText").className = "wheels-up-time green";
-      } else if (capWheelsUpStatus === "caution") {
-        document.getElementById("capWheelsStatus").className = "wheels-up-box caution";
-        document.getElementById("capWheelsStatusText").textContent = "⚠ CAUTION";
-        document.getElementById("capWheelsStatusText").className = "wheels-up-time caution";
-      } else {
-        document.getElementById("capWheelsStatus").className = "wheels-up-box illegal";
-        document.getElementById("capWheelsStatusText").textContent = "✗ EXPIRED";
-        document.getElementById("capWheelsStatusText").className = "wheels-up-time red";
-      }
+      renderWuBox("capWuEnds", "capWuEndsTime", "capWuEndsZ", "capWuEndsCount", capLatestWheelsUpMin, cap.dutyOnMin, capCurrentCont, depTZ);
+      renderWuBox("capWuMax", "capWuMaxTime", "capWuMaxZ", "capWuMaxCount", capLatestWheelsUpMaxMin, cap.dutyOnMin, capCurrentCont, depTZ);
 
       // First Officer wheels-up calculation
       const foFDPEndMin = fo.fpdEndMin;
       const foLatestWheelsUpMin = foFDPEndMin - capWheelsUpNeededMin;
       const foCurrentCont = toContinuous(currentTimeMin, fo.dutyOnMin);
-
-      // Max (with 2h extension) wheels-up
       const foLatestWheelsUpMaxMin = (foFDPEndMin + 120) - capWheelsUpNeededMin;
 
-      document.getElementById("foWheelsUp").innerHTML =
-        `<div><span class="tz-tag">ENDS</span> ${wheelsUpCell(foLatestWheelsUpMin, fo.dutyOnMin, depTZ)}</div>` +
-        `<div><span class="tz-tag">MAX</span>&nbsp; ${wheelsUpCell(foLatestWheelsUpMaxMin, fo.dutyOnMin, depTZ)}</div>`;
-
-      let foWheelsUpStatus = "illegal"; // legal, caution, illegal — keyed to the Ends limit
-
-      if (foLatestWheelsUpMin >= fo.dutyOnMin) {
-        const minutesUntil = foLatestWheelsUpMin - foCurrentCont;
-        if (minutesUntil < 0) {
-          foWheelsUpStatus = "illegal";
-        } else if (minutesUntil <= settings.cautionPeriod) {
-          foWheelsUpStatus = "caution";
-        } else {
-          foWheelsUpStatus = "legal";
-        }
-        const absMin = Math.abs(minutesUntil);
-        document.getElementById("foRemainAfter").textContent =
-          minutesUntil < 0
-            ? `Past Ends cutoff by ${HM(absMin)} (extension may apply)`
-            : `Time to Ends cutoff: ${HM(absMin)}`;
-      } else {
-        foWheelsUpStatus = "illegal";
-        document.getElementById("foRemainAfter").textContent =
-          "Flight time exceeds available FDP";
-      }
-
-      // Status color, keyed to the Ends limit
-      if (foWheelsUpStatus === "legal") {
-        document.getElementById("foWheelsStatus").className = "wheels-up-box legal";
-        document.getElementById("foWheelsStatusText").textContent = "✓ LEGAL";
-        document.getElementById("foWheelsStatusText").className = "wheels-up-time green";
-      } else if (foWheelsUpStatus === "caution") {
-        document.getElementById("foWheelsStatus").className = "wheels-up-box caution";
-        document.getElementById("foWheelsStatusText").textContent = "⚠ CAUTION";
-        document.getElementById("foWheelsStatusText").className = "wheels-up-time caution";
-      } else {
-        document.getElementById("foWheelsStatus").className = "wheels-up-box illegal";
-        document.getElementById("foWheelsStatusText").textContent = "✗ EXPIRED";
-        document.getElementById("foWheelsStatusText").className = "wheels-up-time red";
-      }
+      renderWuBox("foWuEnds", "foWuEndsTime", "foWuEndsZ", "foWuEndsCount", foLatestWheelsUpMin, fo.dutyOnMin, foCurrentCont, depTZ);
+      renderWuBox("foWuMax", "foWuMaxTime", "foWuMaxZ", "foWuMaxCount", foLatestWheelsUpMaxMin, fo.dutyOnMin, foCurrentCont, depTZ);
 
       // Rest check
       const blockInTime = document.getElementById("blockInTime").value;
