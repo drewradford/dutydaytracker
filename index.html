@@ -208,6 +208,11 @@
       }
     }
 
+    .grid-2.solo {
+      grid-template-columns: 1fr;
+      max-width: 480px;
+    }
+
     .card {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -730,10 +735,10 @@
     </div>
 
     <!-- Pilot Cards -->
-    <div class="grid-2">
+    <div class="grid-2" id="pilotGrid">
       <!-- Captain -->
       <div class="card">
-        <div class="card-title">Captain</div>
+        <div class="card-title" id="capCardTitle">Captain</div>
 
         <div class="input-group">
           <div class="input-wrapper">
@@ -797,7 +802,7 @@
       </div>
 
       <!-- First Officer -->
-      <div class="card">
+      <div class="card" id="foCard">
         <div class="card-title">First Officer</div>
 
         <div class="input-group">
@@ -936,6 +941,18 @@
         </div>
       </div>
 
+      <div class="modal-section">
+        <div class="modal-section-title">Display</div>
+
+        <div class="modal-input-group">
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin: 0;">
+            <input type="checkbox" id="singleCrewInput" style="width: 18px; height: 18px; cursor: pointer;">
+            <span class="modal-input-label" style="margin: 0;">Single crewmember (hide First Officer)</span>
+          </label>
+          <div class="rest-info">Shows just one pilot card for solo legality checks.</div>
+        </div>
+      </div>
+
       <div class="modal-buttons">
         <button class="btn" id="resetSettingsBtn">Reset defaults</button>
         <button class="btn btn-primary" id="saveSettingsBtn">Save</button>
@@ -1048,10 +1065,11 @@
           if (s.minRest === undefined) s.minRest = 660;
           if (s.cautionPeriod === undefined) s.cautionPeriod = 30;
           if (s.blockToOff === undefined) s.blockToOff = 15;
+          if (s.singleCrew === undefined) s.singleCrew = false;
           return s;
         }
       } catch (e) {}
-      return { minRest: 660, cautionPeriod: 30, blockToOff: 15 };
+      return { minRest: 660, cautionPeriod: 30, blockToOff: 15, singleCrew: false };
     }
 
     function saveSettings(settings) {
@@ -1061,6 +1079,15 @@
     }
 
     let settings = loadSettings();
+
+    // Show one or both pilot cards based on the single-crew setting
+    function applyCrewMode() {
+      const solo = !!settings.singleCrew;
+      document.getElementById("pilotGrid").classList.toggle("solo", solo);
+      document.getElementById("foCard").style.display = solo ? "none" : "";
+      document.getElementById("capCardTitle").textContent = solo ? "Pilot" : "Captain";
+    }
+    applyCrewMode();
 
     // Current time tracks the device clock and updates live. Read-only so it
     // always reflects real time — a stale manual value could misrepresent legality.
@@ -1233,6 +1260,7 @@
       minRestInput.value = settings.minRest;
       document.getElementById("cautionInput").value = settings.cautionPeriod;
       document.getElementById("blockToOffInput").value = settings.blockToOff;
+      document.getElementById("singleCrewInput").checked = !!settings.singleCrew;
       settingsModal.classList.add("open");
     });
 
@@ -1286,17 +1314,21 @@
       settings.cautionPeriod = parseInt(document.getElementById("cautionInput").value) || 30;
       settings.blockToOff = parseInt(document.getElementById("blockToOffInput").value);
       if (isNaN(settings.blockToOff)) settings.blockToOff = 15;
+      settings.singleCrew = document.getElementById("singleCrewInput").checked;
       saveSettings(settings);
+      applyCrewMode();
       updateDisplay();
       settingsModal.classList.remove("open");
     });
 
     resetSettingsBtn.addEventListener("click", () => {
-      settings = { minRest: 660, cautionPeriod: 30, blockToOff: 15 };
+      settings = { minRest: 660, cautionPeriod: 30, blockToOff: 15, singleCrew: false };
       saveSettings(settings);
       minRestInput.value = 660;
       document.getElementById("cautionInput").value = 30;
       document.getElementById("blockToOffInput").value = 15;
+      document.getElementById("singleCrewInput").checked = false;
+      applyCrewMode();
       updateDisplay();
     });
 
