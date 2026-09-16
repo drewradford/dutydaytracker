@@ -350,6 +350,23 @@
       font-size: 11px;
     }
 
+    .brk {
+      display: grid;
+      grid-template-columns: max-content auto;
+      column-gap: 8px;
+      row-gap: 2px;
+      align-items: baseline;
+    }
+    .brk-tag {
+      color: var(--dim);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+    .brk-t {
+      color: var(--ink);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
     .status-banner {
       padding: 12px;
       border-radius: 8px;
@@ -720,7 +737,7 @@
 
         <div class="input-group">
           <div class="input-wrapper">
-            <label class="input-label" id="capDutyOnLabel">Duty on — show time</label>
+            <label class="input-label">Duty on / RDP start</label>
             <input type="text" id="capDutyOn" value="17:00" placeholder="HH:MM" maxlength="5" inputmode="numeric">
           </div>
           <div class="input-wrapper">
@@ -732,20 +749,6 @@
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
-          </div>
-        </div>
-
-        <div class="input-group full">
-          <div style="display: flex; gap: 16px; align-items: center;">
-            <label class="input-label" style="margin-bottom: 0;">Status</label>
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; margin: 0; cursor: pointer;">
-              <input type="radio" name="capStatus" value="line" checked style="margin: 0; cursor: pointer;">
-              Line
-            </label>
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; margin: 0; cursor: pointer;">
-              <input type="radio" name="capStatus" value="reserve" style="margin: 0; cursor: pointer;">
-              Reserve (short-call)
-            </label>
           </div>
         </div>
 
@@ -799,7 +802,7 @@
 
         <div class="input-group">
           <div class="input-wrapper">
-            <label class="input-label" id="foDutyOnLabel">Duty on — show time</label>
+            <label class="input-label">Duty on / RDP start</label>
             <input type="text" id="foDutyOn" value="17:00" placeholder="HH:MM" maxlength="5" inputmode="numeric">
           </div>
           <div class="input-wrapper">
@@ -811,20 +814,6 @@
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
-          </div>
-        </div>
-
-        <div class="input-group full">
-          <div style="display: flex; gap: 16px; align-items: center;">
-            <label class="input-label" style="margin-bottom: 0;">Status</label>
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; margin: 0; cursor: pointer;">
-              <input type="radio" name="foStatus" value="line" checked style="margin: 0; cursor: pointer;">
-              Line
-            </label>
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; margin: 0; cursor: pointer;">
-              <input type="radio" name="foStatus" value="reserve" style="margin: 0; cursor: pointer;">
-              Reserve (short-call)
-            </label>
           </div>
         </div>
 
@@ -999,14 +988,16 @@
     };
 
     // Break a departure-local end time (in continuous minutes) into
-    // departure-local, arrival-local, and Zulu clock times — three labeled lines.
+    // departure-local, arrival-local, and Zulu — aligned tag/time rows.
     const endBreakdownHTML = (depLocalMin, depOffset, arrOffset) => {
       const depClock = (((depLocalMin % 1440) + 1440) % 1440);
       const zMin = (((depClock - depOffset * 60) % 1440) + 1440) % 1440;
       const aMin = (((depClock + (arrOffset - depOffset) * 60) % 1440) + 1440) % 1440;
-      return `<div><span class="tz-tag">DEP</span> ${HM(depClock)}</div>` +
-             `<div><span class="tz-tag">ARR</span> ${HM(aMin)}</div>` +
-             `<div><span class="tz-tag">Z</span>&nbsp;&nbsp; ${HM(zMin)}</div>`;
+      return `<div class="brk">` +
+             `<span class="brk-tag">DEP</span><span class="brk-t">${HM(depClock)}</span>` +
+             `<span class="brk-tag">ARR</span><span class="brk-t">${HM(aMin)}</span>` +
+             `<span class="brk-tag">Z</span><span class="brk-t">${HM(zMin)}</span>` +
+             `</div>`;
     };
 
     // Paint one wheels-up box: its own color (green/caution/expired) by its own
@@ -1105,26 +1096,16 @@
       return Math.round(band.fdp[col] * 60); // minutes
     }
 
-    // Returns FDP picture for one pilot.
-    // FDP starts at duty-on (report/show time) for BOTH line and reserve — Table B
-    // is entered at that time. (Part 117's RAP+FDP 16h ceiling needs a separate
-    // availability-start time, which this single-anchor model does not capture.)
-    function calcPilot(dutyOnStr, segments, isReserve) {
+    // Returns FDP picture for one pilot. FDP starts at duty-on / RDP start, and
+    // Table B is entered at that time (single-anchor model — see notes on why the
+    // RAP+FDP 16h ceiling can't bind under it).
+    function calcPilot(dutyOnStr, segments) {
       const dutyOnMin = TO_MIN(dutyOnStr);
-      const tableFDP = getFDPLimit(segments, dutyOnMin); // Table B, by duty-on time
+      const tableFDP = getFDPLimit(segments, dutyOnMin);
       const fdpLimit = tableFDP;
-
       const fpdEndMin = dutyOnMin + fdpLimit;
       const fpdEndTime = HM(fpdEndMin % 1440);
-
-      return {
-        dutyOnMin,
-        tableFDP,
-        fdpLimit,
-        fpdEndMin,
-        fpdEndTime,
-        isReserve
-      };
+      return { dutyOnMin, tableFDP, fdpLimit, fpdEndMin, fpdEndTime };
     }
 
     function updateDisplay() {
@@ -1148,13 +1129,13 @@
       // Captain
       const capDutyOn = document.getElementById("capDutyOn").value;
       const capSegments = parseInt(document.getElementById("capSegments").value);
-      const capStatus = document.querySelector('input[name="capStatus"]:checked').value;
-      const capIsReserve = capStatus === 'reserve';
-      const cap = calcPilot(capDutyOn, capSegments, capIsReserve);
+      const cap = calcPilot(capDutyOn, capSegments);
 
       document.getElementById("capFdpLimit").textContent = HM(cap.fdpLimit);
       document.getElementById("capFdpEnd").innerHTML = endBreakdownHTML(cap.fpdEndMin, depTZ, arrTZ);
-      document.getElementById("capRemaining").textContent = HM(cap.fdpLimit);
+      // Remaining FDP from now (midnight-safe); full FDP before duty starts, 0 once expired
+      const capRemainMin = Math.max(0, Math.min(cap.fdpLimit, cap.fpdEndMin - toContinuous(currentTimeMin, cap.dutyOnMin)));
+      document.getElementById("capRemaining").textContent = HM(capRemainMin);
 
       // Extension (FDP + 2 hours)
       const capExtMin = cap.fpdEndMin + 120;
@@ -1163,13 +1144,12 @@
       // First Officer
       const foDutyOn = document.getElementById("foDutyOn").value;
       const foSegments = parseInt(document.getElementById("foSegments").value);
-      const foStatus = document.querySelector('input[name="foStatus"]:checked').value;
-      const foIsReserve = foStatus === 'reserve';
-      const fo = calcPilot(foDutyOn, foSegments, foIsReserve);
+      const fo = calcPilot(foDutyOn, foSegments);
 
       document.getElementById("foFdpLimit").textContent = HM(fo.fdpLimit);
       document.getElementById("foFdpEnd").innerHTML = endBreakdownHTML(fo.fpdEndMin, depTZ, arrTZ);
-      document.getElementById("foRemaining").textContent = HM(fo.fdpLimit);
+      const foRemainMin = Math.max(0, Math.min(fo.fdpLimit, fo.fpdEndMin - toContinuous(currentTimeMin, fo.dutyOnMin)));
+      document.getElementById("foRemaining").textContent = HM(foRemainMin);
 
       // Extension (FDP + 2 hours)
       const foExtMin = fo.fpdEndMin + 120;
@@ -1237,21 +1217,7 @@
 
     // Event listeners
     document.getElementById("capSegments").addEventListener("change", updateDisplay);
-    document.querySelectorAll('input[name="capStatus"]').forEach(radio => {
-      radio.addEventListener("change", () => {
-        const isReserve = document.querySelector('input[name="capStatus"]:checked').value === 'reserve';
-        document.getElementById("capDutyOnLabel").textContent = isReserve ? "Duty on — RDP start" : "Duty on — show time";
-        updateDisplay();
-      });
-    });
     document.getElementById("foSegments").addEventListener("change", updateDisplay);
-    document.querySelectorAll('input[name="foStatus"]').forEach(radio => {
-      radio.addEventListener("change", () => {
-        const isReserve = document.querySelector('input[name="foStatus"]:checked').value === 'reserve';
-        document.getElementById("foDutyOnLabel").textContent = isReserve ? "Duty on — RDP start" : "Duty on — show time";
-        updateDisplay();
-      });
-    });
     document.getElementById("depTZ").addEventListener("change", updateDisplay);
     document.getElementById("arrTZ").addEventListener("change", updateDisplay);
 
